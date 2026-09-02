@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/modernist-8f21c42d-8ef9-4dc9-a797-3e681a963d01/styles.css">
+<script src="_ds/modernist-8f21c42d-8ef9-4dc9-a797-3e681a963d01/_ds_bundle.js"></script>
+<style>
+  .mc-sidebar{ transition: transform .2s ease; }
+  .mc-hamburger, .mc-fab{ display:none; }
+  .mc-overlay{ display:none; }
+  @media (max-width: 860px){
+    .mc-sidebar{ position:fixed; top:0; left:0; height:100vh; z-index:20; transform:translateX(-100%); background:var(--color-bg); }
+    .mc-sidebar.open{ transform:translateX(0); }
+    .mc-hamburger{ display:inline-flex !important; }
+    .mc-fab{ display:flex !important; }
+    .mc-desktop-add{ display:none !important; }
+    .mc-overlay.open{ display:block; position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:15; }
+    main{ padding:20px !important; }
+  }
+</style>
+</helmet>
+<div style="display:flex; min-height:100vh; background:var(--color-bg); font-family:var(--font-body); color:var(--color-text)">
+  <div class="mc-overlay {{ overlayClass }}" onclick="{{ closeMenu }}"></div>
+  <aside class="mc-sidebar {{ sidebarClass }}" style="width:230px; border-right:2px solid var(--color-divider); padding:24px 0; display:flex; flex-direction:column; gap:2px">
+    <div style="display:flex; align-items:center; justify-content:space-between; padding:0 24px 24px">
+      <span style="font-family:var(--font-heading); font-weight:700; font-size:20px; letter-spacing:0.02em">MI CENTRO</span>
+      <button onclick="{{ closeMenu }}" style="display:none; background:none; border:none; color:var(--color-text)" class="mc-hamburger" aria-label="Cerrar menú">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <a href="#" onclick="{{ goDashboard }}" style="display:flex; align-items:center; gap:10px; padding:12px 24px; text-decoration:none; font-weight:{{ navDashboard.weight }}; background:{{ navDashboard.bg }}; color:{{ navDashboard.color }}">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9z"></path><path d="M9 22V12h6v10"></path></svg>
+      <span>Dashboard</span>
+    </a>
+    <a href="#" onclick="{{ goInventario }}" style="display:flex; align-items:center; gap:10px; padding:12px 24px; text-decoration:none; font-weight:{{ navInventario.weight }}; background:{{ navInventario.bg }}; color:{{ navInventario.color }}">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.29 7 12 12 20.71 7"></polyline><line x1="12" y1="22" x2="12" y2="12"></line></svg>
+      <span>Inventario</span>
+    </a>
+    <a href="#" onclick="{{ goTrabajos }}" style="display:flex; align-items:center; gap:10px; padding:12px 24px; text-decoration:none; font-weight:{{ navTrabajos.weight }}; background:{{ navTrabajos.bg }}; color:{{ navTrabajos.color }}">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path><circle cx="12" cy="13" r="3"></circle></svg>
+      <span>Trabajos</span>
+    </a>
+    <a href="#" onclick="{{ goDinero }}" style="display:flex; align-items:center; gap:10px; padding:12px 24px; text-decoration:none; font-weight:{{ navDinero.weight }}; background:{{ navDinero.bg }}; color:{{ navDinero.color }}">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h12"></path><path d="M4 14h9"></path><path d="M19 6a7.7 7.7 0 0 0-5.2-2A7.9 7.9 0 0 0 6 12a7.9 7.9 0 0 0 7.8 8 7.7 7.7 0 0 0 5.2-2"></path></svg>
+      <span>Dinero</span>
+    </a>
+    <a href="#" onclick="{{ goControl }}" style="display:flex; align-items:center; gap:10px; padding:12px 24px; text-decoration:none; font-weight:{{ navControl.weight }}; background:{{ navControl.bg }}; color:{{ navControl.color }}">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
+      <span>Control</span>
+    </a>
+    <a href="#" onclick="{{ goFuturo }}" style="display:flex; align-items:center; gap:10px; padding:12px 24px; text-decoration:none; font-weight:{{ navFuturo.weight }}; background:{{ navFuturo.bg }}; color:{{ navFuturo.color }}">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+      <span>Futuro</span>
+    </a>
+    <a href="#" onclick="{{ goEstadisticas }}" style="display:flex; align-items:center; gap:10px; padding:12px 24px; text-decoration:none; font-weight:{{ navEstadisticas.weight }}; background:{{ navEstadisticas.bg }}; color:{{ navEstadisticas.color }}">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+      <span>Estadísticas</span>
+    </a>
+    <a href="#" onclick="{{ goConfiguracion }}" style="display:flex; align-items:center; gap:10px; padding:12px 24px; text-decoration:none; font-weight:{{ navConfiguracion.weight }}; background:{{ navConfiguracion.bg }}; color:{{ navConfiguracion.color }}">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
+      <span>Configuración</span>
+    </a>
+    <div style="margin-top:auto; padding:16px 24px">
+      <div class="btn btn-secondary btn-block" onclick="{{ openInbox }}" style="justify-content:flex-start; gap:8px; display:flex; align-items:center">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-6l-2 3h-4l-2-3H2"></path><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path></svg>
+        Bandeja ({{ inboxCount }})
+      </div>
+    </div>
+  </aside>
+
+  <sc-if value="{{ inboxOpen }}" hint-placeholder-val="{{ false }}">
+    <div onclick="{{ closeInbox }}" style="position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:40; display:flex; justify-content:flex-end">
+      <div onclick="{{ stop }}" style="width:420px; max-width:92vw; height:100%; background:var(--color-bg); border-left:2px solid var(--color-divider); padding:24px; display:flex; flex-direction:column; gap:16px; overflow:auto">
+        <div style="display:flex; justify-content:space-between; align-items:center">
+          <div style="font-size:18px; font-weight:700; font-family:var(--font-heading)">Bandeja de entrada</div>
+          <span onclick="{{ closeInbox }}" style="cursor:pointer">✕</span>
+        </div>
+        <div style="display:flex; gap:8px">
+          <input class="input" placeholder="Apunta algo rápido..." value="{{ newInboxText }}" onChange="{{ setNewInboxText }}" style="flex:1">
+          <div class="btn btn-primary" onclick="{{ addInboxNote }}">Añadir</div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:2px; border:2px solid var(--color-divider)">
+          <sc-for list="{{ inboxItems }}" as="it" hint-placeholder-count="3">
+            <div style="padding:12px 14px; border-bottom:1px solid var(--color-divider); display:flex; flex-direction:column; gap:8px">
+              <div>{{ it.text }}</div>
+              <div style="display:flex; justify-content:space-between; align-items:center">
+                <select class="input" value="{{ it.type }}" onChange="{{ it.setType }}" style="padding:4px 8px; font-size:13px">
+                  <sc-for list="{{ inboxTypes }}" as="t" hint-placeholder-count="11"><option value="{{ t }}">{{ t }}</option></sc-for>
+                </select>
+                <span onclick="{{ it.resolve }}" style="cursor:pointer; color:var(--color-neutral-700); font-size:13px">Resolver ✕</span>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+  <main style="flex:1; padding:32px 40px; display:flex; flex-direction:column; gap:32px; max-width:1200px">
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:16px">
+      <button class="mc-hamburger btn btn-icon" onclick="{{ openMenu }}" aria-label="Abrir menú">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+      <input class="input" placeholder="Buscar objetos, trabajos, clientes... (⌘K)" onFocus="{{ openCommand }}" readOnly="{{ true }}" style="flex:1; max-width:420px; cursor:pointer">
+      <div style="position:relative">
+        <div class="btn btn-primary mc-desktop-add" onclick="{{ toggleQuickAdd }}" style="display:flex; align-items:center; gap:8px">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          Apuntar rápido
+        </div>
+        <sc-if value="{{ quickAddOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute; right:0; top:calc(100% + 4px); width:220px; background:var(--color-bg); border:2px solid var(--color-divider); z-index:30; box-shadow:var(--shadow-lg)">
+            <sc-for list="{{ quickAddOptions }}" as="opt" hint-placeholder-count="11">
+              <div onclick="{{ closeQuickAdd }}" style="padding:10px 14px; cursor:pointer; border-bottom:1px solid var(--color-divider)">{{ opt }}</div>
+            </sc-for>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+
+    <sc-if value="{{ commandOpen }}" hint-placeholder-val="{{ false }}">
+      <div onclick="{{ closeCommand }}" style="position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:40; display:flex; align-items:flex-start; justify-content:center; padding-top:100px">
+        <div onclick="{{ stop }}" style="width:520px; max-width:90vw; background:var(--color-bg); border:2px solid var(--color-divider); box-shadow:var(--shadow-lg)">
+          <input class="input" autoFocus="{{ true }}" placeholder="Buscar Canon, Gobergo, Nazareno..." value="{{ commandQuery }}" onChange="{{ setCommandQuery }}" style="width:100%; border:none; border-bottom:2px solid var(--color-divider)">
+          <div style="max-height:320px; overflow:auto">
+            <sc-for list="{{ commandResults }}" as="r" hint-placeholder-count="3">
+              <div style="padding:12px 16px; display:flex; justify-content:space-between; border-bottom:1px solid var(--color-divider)"><span>{{ r.label }}</span><span class="tag tag-neutral">{{ r.type }}</span></div>
+            </sc-for>
+            <sc-if value="{{ commandEmpty }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:24px; text-align:center; color:var(--color-neutral-700)">Sin resultados</div>
+            </sc-if>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isDashboard }}" hint-placeholder-val="{{ true }}">
+      <div>
+        <div style="font-size:13px; text-transform:uppercase; letter-spacing:0.05em; color:var(--color-neutral-700); margin-bottom:12px">Resumen</div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:2px; border:2px solid var(--color-divider)">
+          <div style="padding:20px; border-right:2px solid var(--color-divider)"><div class="card-kicker">Patrimonio financiero</div><div style="font-family:var(--font-heading); font-size:27px; font-weight:700; white-space:nowrap">{{ patrimonioDisplay }}</div></div>
+          <div style="padding:20px; border-right:2px solid var(--color-divider)"><div class="card-kicker">Valor equipo</div><div style="font-family:var(--font-heading); font-size:27px; font-weight:700; white-space:nowrap">{{ totalObjectsValue }}</div></div>
+          <div style="padding:20px; border-right:2px solid var(--color-divider)"><div class="card-kicker">Ingresos mes</div><div style="font-family:var(--font-heading); font-size:27px; font-weight:700; color:var(--color-accent-700); white-space:nowrap">{{ ingresosMesDisplay }}</div></div>
+          <div style="padding:20px; border-right:2px solid var(--color-divider)"><div class="card-kicker">Wishlist</div><div style="font-family:var(--font-heading); font-size:27px; font-weight:700; white-space:nowrap">11</div></div>
+          <div style="padding:20px"><div class="card-kicker">Suscripciones/mes</div><div style="font-family:var(--font-heading); font-size:27px; font-weight:700; white-space:nowrap">0,00 €</div></div>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px">
+        <div class="card"><div class="card-kicker">Pendiente de cobrar</div><div class="card-title">{{ pendienteCobrarDisplay }}</div></div>
+        <div class="card"><div class="card-kicker">Trabajos próximos</div><div class="card-title">{{ proximosCount }}</div></div>
+        <div class="card"><div class="card-kicker">Objetos registrados</div><div class="card-title">{{ totalObjectsCount }}</div></div>
+        <div class="card"><div class="card-kicker">Mantenimientos</div><div class="card-title">0</div></div>
+        <div class="card"><div class="card-kicker">Alertas activas</div><div class="card-title" style="color:var(--color-accent)">1</div></div>
+      </div>
+      <div>
+        <div class="hr" style="margin-bottom:12px"></div>
+        <div style="font-size:13px; text-transform:uppercase; letter-spacing:0.05em; color:var(--color-neutral-700); margin-bottom:12px">Cuentas e inversiones</div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:2px; border:2px solid var(--color-divider)">
+          <div style="padding:16px; border-right:2px solid var(--color-divider)"><span class="tag tag-neutral">Cuenta</span><div style="font-weight:600; margin-top:8px">BBVA</div><div style="font-size:15px; margin-top:4px; white-space:nowrap">{{ bbvaDisplay }}</div></div>
+          <div style="padding:16px; border-right:2px solid var(--color-divider)"><span class="tag tag-neutral">Cuenta</span><div style="font-weight:600; margin-top:8px">Imagin</div><div style="font-size:15px; margin-top:4px; white-space:nowrap">{{ imaginDisplay }}</div></div>
+          <div style="padding:16px; border-right:2px solid var(--color-divider)"><span class="tag tag-neutral">Cuenta</span><div style="font-weight:600; margin-top:8px">Revolut</div><div style="font-size:15px; margin-top:4px; white-space:nowrap">{{ revolutDisplay }}</div></div>
+          <div style="padding:16px; border-right:2px solid var(--color-divider)"><span class="tag tag-accent">Inversión</span><div style="font-weight:600; margin-top:8px">Trade Republic</div><div style="font-size:15px; margin-top:4px; white-space:nowrap">{{ tradeRepublicDisplay }}</div><div style="font-size:12px; color:var(--color-neutral-700); margin-top:4px">3% TAE · ≈ +{{ trInterestDisplay }}/día</div></div>
+          <div style="padding:16px"><span class="tag tag-accent">Inversión</span><div style="font-weight:600; margin-top:8px">MyInvestor</div><div style="font-size:15px; margin-top:4px; white-space:nowrap">{{ myInvestorDisplay }}</div></div>
+        </div>
+        <div style="font-size:13px; color:var(--color-neutral-700); margin-top:8px">Invertido entre Trade Republic y MyInvestor: {{ investedTotalDisplay }}</div>
+        <div style="display:flex; gap:8px; align-items:flex-end; margin-top:16px; flex-wrap:wrap">
+          <select class="input" value="{{ expenseAccount }}" onChange="{{ setExpenseAccount }}" style="width:170px">
+            <option value="bbva">BBVA</option>
+            <option value="imagin">Imagin</option>
+            <option value="revolut">Revolut</option>
+            <option value="tradeRepublic">Trade Republic</option>
+            <option value="myInvestor">MyInvestor</option>
+          </select>
+          <select class="input" value="{{ expenseType }}" onChange="{{ setExpenseType }}" style="width:130px">
+            <option value="gasto">Gasto (-)</option>
+            <option value="ingreso">Ingreso (+)</option>
+          </select>
+          <input class="input" type="number" step="0.01" placeholder="Importe (€)" value="{{ expenseAmount }}" onChange="{{ setExpenseAmount }}" style="width:150px">
+          <div class="btn btn-secondary" onclick="{{ registerExpense }}">Registrar</div>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:1.3fr 1fr; gap:24px">
+        <div>
+          <div class="hr" style="margin-bottom:12px"></div>
+          <div style="font-size:13px; text-transform:uppercase; letter-spacing:0.05em; color:var(--color-neutral-700); margin-bottom:12px">Tareas pendientes en webs</div>
+          <div style="display:flex; flex-direction:column; gap:2px; border:2px solid var(--color-divider)">
+            <div style="display:flex; justify-content:space-between; padding:14px 16px; border-bottom:2px solid var(--color-divider)"><span>Gobergo</span><span class="tag tag-neutral">SEO, móvil, galería</span></div>
+            <div style="display:flex; justify-content:space-between; padding:14px 16px"><span>Figuras3D Shop</span><span class="tag tag-neutral">Productos, diseño, fotos</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="hr" style="margin-bottom:12px"></div>
+          <div style="font-size:13px; text-transform:uppercase; letter-spacing:0.05em; color:var(--color-neutral-700); margin-bottom:12px">Alertas</div>
+          <div style="display:flex; flex-direction:column; gap:2px; border:2px solid var(--color-divider)">
+            <div style="padding:14px 16px">💳 Gemini Pro (estudiante) pasa a pago al terminar el año gratis</div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isInventario }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div style="font-size:20px; font-weight:700; font-family:var(--font-heading); margin-bottom:16px">Inventario</div>
+        <div style="display:flex; gap:2px; border:2px solid var(--color-divider); flex-wrap:wrap">
+          <sc-for list="{{ invTabs }}" as="tab" hint-placeholder-count="6">
+            <div onclick="{{ tab.select }}" style="padding:10px 16px; cursor:pointer; background:{{ tab.bg }}; color:{{ tab.color }}; font-weight:600; border-right:2px solid var(--color-divider)">{{ tab.label }}</div>
+          </sc-for>
+        </div>
+        <sc-if value="{{ isWebsTab }}" hint-placeholder-val="{{ false }}">
+          <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:2px; border:2px solid var(--color-divider); border-top:none; margin-top:-2px">
+            <sc-for list="{{ webs }}" as="web" hint-placeholder-count="6">
+              <div style="padding:18px; border-right:2px solid var(--color-divider); border-top:2px solid var(--color-divider)">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px">
+                  <div class="card-title" style="font-size:16px">{{ web.name }}</div>
+                  <span class="tag tag-accent">{{ web.estado }}</span>
+                </div>
+                <div class="card-meta" style="margin-top:4px">{{ web.categoria }}</div>
+                <div style="font-size:13px; margin-top:10px; color:var(--color-neutral-700)">Pendiente: {{ web.tareas }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ hasObjectsInTab }}" hint-placeholder-val="{{ false }}">
+          <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:2px; border:2px solid var(--color-divider); border-top:none; margin-top:-2px">
+            <sc-for list="{{ objectsInTab }}" as="obj" hint-placeholder-count="6">
+              <div style="padding:16px; border-right:2px solid var(--color-divider); border-top:2px solid var(--color-divider); opacity:{{ obj.opacity }}">
+                <div class="card-title" style="font-size:15px">{{ obj.name }}</div>
+                <div class="card-meta" style="margin-top:4px">{{ obj.sub }}</div>
+                <div style="display:flex; gap:6px; margin-top:10px; flex-wrap:wrap">
+                  <input class="input" value="{{ obj.price }}" onChange="{{ obj.setPrice }}" style="width:100px; font-weight:600; padding:6px 8px; font-size:14px">
+                  <select class="input" value="{{ obj.estado }}" onChange="{{ obj.setEstado }}" style="width:120px; padding:6px 8px; font-size:14px">
+                    <sc-for list="{{ estadoOptions }}" as="opt" hint-placeholder-count="8">
+                      <option value="{{ opt }}">{{ opt }}</option>
+                    </sc-for>
+                  </select>
+                </div>
+                <sc-if value="{{ obj.excluded }}" hint-placeholder-val="{{ false }}">
+                  <div style="font-size:12px; color:var(--color-accent-700); margin-top:6px; font-weight:600">No cuenta en el valor del equipo</div>
+                </sc-if>
+                <sc-if value="{{ obj.note }}" hint-placeholder-val="{{ false }}">
+                  <div style="font-size:12px; color:var(--color-neutral-700); margin-top:6px">{{ obj.note }}</div>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ isEmptyInvTab }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:40px; border:2px solid var(--color-divider); border-top:none; margin-top:-2px; text-align:center; color:var(--color-neutral-700)">
+            0 objetos en esta categoría
+            <div class="btn btn-secondary" style="margin:16px auto 0; display:inline-flex">+ Añadir objeto</div>
+          </div>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isTrabajos }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div style="font-size:20px; font-weight:700; font-family:var(--font-heading); margin-bottom:16px">Trabajos</div>
+
+        <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:16px">
+          <input class="input" placeholder="Nombre del trabajo *" value="{{ newJobName }}" onChange="{{ setNewJobName }}" style="width:220px">
+          <input class="input" placeholder="Cliente" value="{{ newJobClient }}" onChange="{{ setNewJobClient }}" style="width:160px">
+          <input class="input" type="date" value="{{ newJobDate }}" onChange="{{ setNewJobDate }}" style="width:160px">
+          <input class="input" type="number" step="0.01" placeholder="Precio (€)" value="{{ newJobPrice }}" onChange="{{ setNewJobPrice }}" style="width:130px">
+          <div class="btn btn-primary" onclick="{{ addJob }}">+ Añadir trabajo</div>
+        </div>
+
+        <sc-if value="{{ hasJobs }}" hint-placeholder-val="{{ false }}">
+          <table class="table">
+            <tr><th>Trabajo</th><th>Cliente</th><th>Fecha</th><th>Precio</th><th>Cobrado</th><th>Pendiente</th><th>Estado</th><th></th></tr>
+            <sc-for list="{{ jobRows }}" as="job" hint-placeholder-count="3">
+              <tr>
+                <td>{{ job.name }}</td>
+                <td>{{ job.client }}</td>
+                <td>{{ job.date }}</td>
+                <td><input class="input" value="{{ job.price }}" onChange="{{ job.setPrice }}" style="width:90px; padding:4px 6px"></td>
+                <td><input class="input" value="{{ job.cobrado }}" onChange="{{ job.setCobrado }}" style="width:90px; padding:4px 6px"></td>
+                <td>{{ job.pendingDisplay }}</td>
+                <td>
+                  <select class="input" value="{{ job.estado }}" onChange="{{ job.setEstado }}" style="width:150px; padding:4px 6px">
+                    <sc-for list="{{ jobStates }}" as="st" hint-placeholder-count="11">
+                      <option value="{{ st }}">{{ st }}</option>
+                    </sc-for>
+                  </select>
+                </td>
+                <td><span onclick="{{ job.archive }}" style="cursor:pointer; color:var(--color-neutral-700)">Archivar</span></td>
+              </tr>
+            </sc-for>
+          </table>
+        </sc-if>
+        <sc-if value="{{ noJobs }}" hint-placeholder-val="{{ true }}">
+          <div style="padding:40px; border:2px solid var(--color-divider); text-align:center; color:var(--color-neutral-700)">Sin trabajos registrados todavía — añade el primero arriba</div>
+        </sc-if>
+
+        <div class="hr" style="margin:24px 0 16px"></div>
+        <div style="font-size:13px; text-transform:uppercase; letter-spacing:0.05em; color:var(--color-neutral-700); margin-bottom:12px">Clientes</div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:16px">
+          <input class="input" placeholder="Nombre del cliente *" value="{{ newClientName }}" onChange="{{ setNewClientName }}" style="width:220px">
+          <input class="input" placeholder="Contacto (tel/email/IG)" value="{{ newClientContact }}" onChange="{{ setNewClientContact }}" style="width:220px">
+          <div class="btn btn-secondary" onclick="{{ addClient }}">+ Añadir cliente</div>
+        </div>
+        <sc-if value="{{ hasClients }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex; flex-direction:column; gap:2px; border:2px solid var(--color-divider)">
+            <sc-for list="{{ clients }}" as="client" hint-placeholder-count="2">
+              <div style="display:flex; justify-content:space-between; padding:12px 16px; border-bottom:1px solid var(--color-divider)"><span style="font-weight:600">{{ client.name }}</span><span class="card-meta">{{ client.contact }}</span></div>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ noClients }}" hint-placeholder-val="{{ true }}">
+          <div style="padding:24px; border:2px solid var(--color-divider); text-align:center; color:var(--color-neutral-700)">Sin clientes registrados</div>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isDinero }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div style="font-size:20px; font-weight:700; font-family:var(--font-heading); margin-bottom:16px">Dinero</div>
+        <div style="font-size:13px; text-transform:uppercase; letter-spacing:0.05em; color:var(--color-neutral-700); margin-bottom:12px">Cuentas e inversiones</div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:2px; border:2px solid var(--color-divider)">
+          <div style="padding:16px; border-right:2px solid var(--color-divider)"><span class="tag tag-neutral">Cuenta</span><div style="font-weight:600; margin-top:8px">BBVA</div><div style="font-size:15px; margin-top:4px; white-space:nowrap">{{ bbvaDisplay }}</div></div>
+          <div style="padding:16px; border-right:2px solid var(--color-divider)"><span class="tag tag-neutral">Cuenta</span><div style="font-weight:600; margin-top:8px">Imagin</div><div style="font-size:15px; margin-top:4px; white-space:nowrap">{{ imaginDisplay }}</div></div>
+          <div style="padding:16px; border-right:2px solid var(--color-divider)"><span class="tag tag-neutral">Cuenta</span><div style="font-weight:600; margin-top:8px">Revolut</div><div style="font-size:15px; margin-top:4px; white-space:nowrap">{{ revolutDisplay }}</div></div>
+          <div style="padding:16px; border-right:2px solid var(--color-divider)"><span class="tag tag-accent">Inversión</span><div style="font-weight:600; margin-top:8px">Trade Republic</div><div style="font-size:15px; margin-top:4px; white-space:nowrap">{{ tradeRepublicDisplay }}</div><div style="font-size:12px; color:var(--color-neutral-700); margin-top:4px">3% TAE · ≈ +{{ trInterestDisplay }}/día</div></div>
+          <div style="padding:16px"><span class="tag tag-accent">Inversión</span><div style="font-weight:600; margin-top:8px">MyInvestor</div><div style="font-size:15px; margin-top:4px; white-space:nowrap">{{ myInvestorDisplay }}</div></div>
+        </div>
+        <div style="display:flex; gap:8px; align-items:flex-end; margin-top:16px; flex-wrap:wrap">
+          <select class="input" value="{{ expenseAccount }}" onChange="{{ setExpenseAccount }}" style="width:170px">
+            <option value="bbva">BBVA</option>
+            <option value="imagin">Imagin</option>
+            <option value="revolut">Revolut</option>
+            <option value="tradeRepublic">Trade Republic</option>
+            <option value="myInvestor">MyInvestor</option>
+          </select>
+          <select class="input" value="{{ expenseType }}" onChange="{{ setExpenseType }}" style="width:130px">
+            <option value="gasto">Gasto (-)</option>
+            <option value="ingreso">Ingreso (+)</option>
+          </select>
+          <input class="input" type="number" step="0.01" placeholder="Importe (€)" value="{{ expenseAmount }}" onChange="{{ setExpenseAmount }}" style="width:150px">
+          <div class="btn btn-secondary" onclick="{{ registerExpense }}">Registrar</div>
+        </div>
+        <div class="hr" style="margin:24px 0 16px"></div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px">
+          <div>
+            <div style="font-size:13px; text-transform:uppercase; letter-spacing:0.05em; color:var(--color-neutral-700); margin-bottom:12px">Gastos</div>
+            <div style="padding:24px; border:2px solid var(--color-divider); text-align:center; color:var(--color-neutral-700)">Sin gastos registrados todavía</div>
+          </div>
+          <div>
+            <div style="font-size:13px; text-transform:uppercase; letter-spacing:0.05em; color:var(--color-neutral-700); margin-bottom:12px">Suscripciones</div>
+            <div style="padding:16px; border:2px solid var(--color-divider); display:flex; justify-content:space-between; align-items:center">
+              <div><div style="font-weight:600">Gemini Pro (estudiante)</div><div class="card-meta">Prueba gratuita — pasa a pago al terminar el año</div></div>
+              <span class="tag tag-outline">0,00 €</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isControl }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div style="font-size:20px; font-weight:700; font-family:var(--font-heading); margin-bottom:16px">Control</div>
+        <div style="display:flex; gap:2px; border:2px solid var(--color-divider); flex-wrap:wrap">
+          <sc-for list="{{ controlTabs }}" as="tab" hint-placeholder-count="5">
+            <div onclick="{{ tab.select }}" style="padding:10px 16px; cursor:pointer; background:{{ tab.bg }}; color:{{ tab.color }}; font-weight:600; border-right:2px solid var(--color-divider)">{{ tab.label }}</div>
+          </sc-for>
+        </div>
+        <div style="border:2px solid var(--color-divider); border-top:none; margin-top:-2px; padding:20px">
+
+          <div style="display:{{ maintDisplay }}">
+            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px">
+              <input class="input" placeholder="Objeto / tarea *" value="{{ newMaintName }}" onChange="{{ setNewMaintName }}" style="width:200px">
+              <input class="input" type="date" value="{{ newMaintNext }}" onChange="{{ setNewMaintNext }}" style="width:160px">
+              <input class="input" placeholder="Notas" value="{{ newMaintNotes }}" onChange="{{ setNewMaintNotes }}" style="width:200px">
+              <div class="btn btn-primary" onclick="{{ addMaintenance }}">+ Añadir</div>
+            </div>
+            <sc-if value="{{ hasMaintenances }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex; flex-direction:column; gap:2px; border:2px solid var(--color-divider)">
+                <sc-for list="{{ maintenances }}" as="m" hint-placeholder-count="2">
+                  <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 16px; border-bottom:1px solid var(--color-divider); gap:10px; flex-wrap:wrap">
+                    <div><div style="font-weight:600">{{ m.name }}</div><div class="card-meta">{{ m.next }} · {{ m.notes }}</div></div>
+                    <div style="display:flex; gap:8px; align-items:center">
+                      <select class="input" value="{{ m.status }}" onChange="{{ m.setStatus }}" style="padding:4px 8px">
+                        <sc-for list="{{ maintStatusOptions }}" as="op" hint-placeholder-count="4"><option value="{{ op }}">{{ op }}</option></sc-for>
+                      </select>
+                      <span onclick="{{ m.remove }}" style="cursor:pointer; color:var(--color-neutral-700)">✕</span>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+
+          <div style="display:{{ warrantyDisplay }}">
+            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px">
+              <input class="input" placeholder="Objeto *" value="{{ newWarrantyObject }}" onChange="{{ setNewWarrantyObject }}" style="width:220px">
+              <input class="input" type="date" value="{{ newWarrantyEnd }}" onChange="{{ setNewWarrantyEnd }}" style="width:180px">
+              <div class="btn btn-primary" onclick="{{ addWarranty }}">+ Añadir</div>
+            </div>
+            <sc-if value="{{ hasWarranties }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex; flex-direction:column; gap:2px; border:2px solid var(--color-divider)">
+                <sc-for list="{{ warranties }}" as="w" hint-placeholder-count="2">
+                  <div style="display:flex; justify-content:space-between; padding:12px 16px; border-bottom:1px solid var(--color-divider)">
+                    <div><div style="font-weight:600">{{ w.object }}</div><div class="card-meta">Fin de garantía: {{ w.end }}</div></div>
+                    <span onclick="{{ w.remove }}" style="cursor:pointer; color:var(--color-neutral-700)">✕</span>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+
+          <div style="display:{{ loanDisplay }}">
+            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px">
+              <input class="input" placeholder="Objeto *" value="{{ newLoanObject }}" onChange="{{ setNewLoanObject }}" style="width:180px">
+              <input class="input" placeholder="Persona *" value="{{ newLoanPerson }}" onChange="{{ setNewLoanPerson }}" style="width:160px">
+              <input class="input" type="date" value="{{ newLoanDue }}" onChange="{{ setNewLoanDue }}" style="width:180px">
+              <div class="btn btn-primary" onclick="{{ addLoan }}">+ Añadir</div>
+            </div>
+            <sc-if value="{{ hasLoans }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex; flex-direction:column; gap:2px; border:2px solid var(--color-divider)">
+                <sc-for list="{{ loans }}" as="l" hint-placeholder-count="2">
+                  <div style="display:flex; justify-content:space-between; padding:12px 16px; border-bottom:1px solid var(--color-divider)">
+                    <div><div style="font-weight:600">{{ l.object }}</div><div class="card-meta">Prestado a {{ l.person }} · devolución prevista {{ l.due }}</div></div>
+                    <span onclick="{{ l.remove }}" style="cursor:pointer; color:var(--color-neutral-700)">✕</span>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+
+          <div style="display:{{ consumableDisplay }}">
+            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px">
+              <input class="input" placeholder="Consumible *" value="{{ newConsumableName }}" onChange="{{ setNewConsumableName }}" style="width:220px">
+              <select class="input" value="{{ newConsumableStatus }}" onChange="{{ setNewConsumableStatus }}" style="width:150px">
+                <sc-for list="{{ consumableStatusOptions }}" as="op" hint-placeholder-count="5"><option value="{{ op }}">{{ op }}</option></sc-for>
+              </select>
+              <div class="btn btn-primary" onclick="{{ addConsumable }}">+ Añadir</div>
+            </div>
+            <sc-if value="{{ hasConsumables }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex; flex-direction:column; gap:2px; border:2px solid var(--color-divider)">
+                <sc-for list="{{ consumables }}" as="c" hint-placeholder-count="2">
+                  <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 16px; border-bottom:1px solid var(--color-divider)">
+                    <div style="font-weight:600">{{ c.name }}</div>
+                    <div style="display:flex; gap:8px; align-items:center">
+                      <select class="input" value="{{ c.status }}" onChange="{{ c.setStatus }}" style="padding:4px 8px">
+                        <sc-for list="{{ consumableStatusOptions }}" as="op" hint-placeholder-count="5"><option value="{{ op }}">{{ op }}</option></sc-for>
+                      </select>
+                      <span onclick="{{ c.remove }}" style="cursor:pointer; color:var(--color-neutral-700)">✕</span>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+
+          <div style="display:{{ kitDisplay }}">
+            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px">
+              <input class="input" placeholder="Nombre del kit *" value="{{ newKitName }}" onChange="{{ setNewKitName }}" style="width:200px">
+              <input class="input" placeholder="Items separados por coma" value="{{ newKitItems }}" onChange="{{ setNewKitItems }}" style="width:300px">
+              <div class="btn btn-primary" onclick="{{ addKit }}">+ Crear kit</div>
+            </div>
+            <sc-if value="{{ hasKits }}" hint-placeholder-val="{{ false }}">
+              <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px">
+                <sc-for list="{{ kits }}" as="kit" hint-placeholder-count="2">
+                  <div class="card">
+                    <div style="display:flex; justify-content:space-between; align-items:center">
+                      <div class="card-title">{{ kit.name }}</div>
+                      <span onclick="{{ kit.remove }}" style="cursor:pointer; color:var(--color-neutral-700)">✕</span>
+                    </div>
+                    <div style="margin-top:10px; display:flex; flex-direction:column; gap:6px">
+                      <sc-for list="{{ kit.itemsView }}" as="it" hint-placeholder-count="4">
+                        <label style="display:flex; gap:8px; align-items:center; cursor:pointer">
+                          <input type="checkbox" checked="{{ it.checked }}" onChange="{{ it.toggle }}">
+                          <span>{{ it.name }}</span>
+                        </label>
+                      </sc-for>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px">
+                      <sc-if value="{{ kit.allChecked }}" hint-placeholder-val="{{ false }}"><span class="tag tag-accent">✅ Preparado</span></sc-if>
+                      <div class="btn btn-secondary" onclick="{{ kit.reset }}" style="margin-left:auto">Reiniciar</div>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isEstadisticas }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div style="font-size:20px; font-weight:700; font-family:var(--font-heading); margin-bottom:16px">Estadísticas</div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:2px; border:2px solid var(--color-divider)">
+          <div style="padding:20px; border-right:2px solid var(--color-divider)"><div class="card-kicker">Valor equipo</div><div style="font-family:var(--font-heading); font-size:24px; font-weight:700">{{ totalObjectsValue }}</div></div>
+          <div style="padding:20px; border-right:2px solid var(--color-divider)"><div class="card-kicker">Patrimonio</div><div style="font-family:var(--font-heading); font-size:24px; font-weight:700">{{ patrimonioDisplay }}</div></div>
+          <div style="padding:20px; border-right:2px solid var(--color-divider)"><div class="card-kicker">Items en Wishlist</div><div style="font-family:var(--font-heading); font-size:24px; font-weight:700">11</div></div>
+          <div style="padding:20px"><div class="card-kicker">Webs activas</div><div style="font-family:var(--font-heading); font-size:24px; font-weight:700">6</div></div>
+        </div>
+        <div style="padding:24px; border:2px solid var(--color-divider); border-top:none; text-align:center; color:var(--color-neutral-700)">Gráficas de ingresos, gastos y uso de equipo llegarán cuando haya datos reales de trabajos.</div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isConfiguracion }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div style="font-size:20px; font-weight:700; font-family:var(--font-heading); margin-bottom:16px">Configuración</div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:16px; border:2px solid var(--color-divider); margin-bottom:16px">
+          <div><div style="font-weight:600">Bloqueo con PIN</div><div class="card-meta">Candado de interfaz, no cifra los datos</div></div>
+          <div class="btn btn-secondary" onclick="{{ togglePin }}">{{ pinButtonLabel }}</div>
+        </div>
+        <sc-if value="{{ pinEnabled }}" hint-placeholder-val="{{ false }}">
+          <input class="input" type="password" placeholder="Define tu PIN" value="{{ pinValue }}" onChange="{{ setPinValue }}" style="max-width:200px; margin-bottom:16px">
+        </sc-if>
+
+        <div style="padding:16px; border:2px solid var(--color-divider); margin-bottom:16px">
+          <div style="font-weight:600; margin-bottom:4px">Moneda</div>
+          <div class="card-meta">€ — formato español (1.200,00 €)</div>
+        </div>
+
+        <div style="padding:16px; border:2px solid var(--color-divider); margin-bottom:16px">
+          <div style="font-weight:600; margin-bottom:10px">Categorías de Inventario</div>
+          <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px">
+            <sc-for list="{{ categories }}" as="cat" hint-placeholder-count="6">
+              <span class="tag tag-neutral" style="display:flex; align-items:center; gap:6px">{{ cat.name }}<span onclick="{{ cat.remove }}" style="cursor:pointer">✕</span></span>
+            </sc-for>
+          </div>
+          <div style="display:flex; gap:8px">
+            <input class="input" placeholder="Nueva categoría" value="{{ newCategory }}" onChange="{{ setNewCategory }}" style="max-width:220px">
+            <div class="btn btn-secondary" onclick="{{ addCategory }}">Añadir</div>
+          </div>
+        </div>
+
+        <div style="padding:16px; border:2px solid var(--color-divider); margin-bottom:16px">
+          <div style="font-weight:600; margin-bottom:10px">Ubicaciones</div>
+          <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px">
+            <sc-for list="{{ locations }}" as="loc" hint-placeholder-count="6">
+              <span class="tag tag-neutral" style="display:flex; align-items:center; gap:6px">{{ loc.name }}<span onclick="{{ loc.remove }}" style="cursor:pointer">✕</span></span>
+            </sc-for>
+          </div>
+          <div style="display:flex; gap:8px">
+            <input class="input" placeholder="Nueva ubicación" value="{{ newLocation }}" onChange="{{ setNewLocation }}" style="max-width:220px">
+            <div class="btn btn-secondary" onclick="{{ addLocation }}">Añadir</div>
+          </div>
+        </div>
+
+        <div style="padding:16px; border:2px solid var(--color-divider); display:flex; justify-content:space-between; align-items:center">
+          <div><div style="font-weight:600">Backup</div><div class="card-meta">Aviso mensual para exportar tus datos</div></div>
+          <div class="btn btn-primary">Exportar backup</div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isFuturo }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div style="font-size:20px; font-weight:700; font-family:var(--font-heading); margin-bottom:16px">Futuro — Wishlist</div>
+
+        <div style="padding:16px; border:2px solid var(--color-divider); margin-bottom:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px">
+          <div><div style="font-weight:600">Dinero ahorrado para compras futuras</div><div class="card-meta">Se usa para calcular a qué compra estás más cerca</div></div>
+          <input class="input" type="number" step="0.01" value="{{ savedAmount }}" onChange="{{ setSavedAmount }}" style="width:140px; text-align:right; font-weight:700">
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:2px; border:2px solid var(--color-divider)">
+          <sc-for list="{{ wishlist }}" as="item" hint-placeholder-count="11">
+            <div style="padding:16px; border-right:2px solid var(--color-divider); border-bottom:2px solid var(--color-divider)">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px">
+                <div class="card-title" style="font-size:15px">{{ item.name }}</div>
+                <span class="tag tag-outline">{{ item.priority }}</span>
+              </div>
+              <div class="card-meta" style="margin-top:4px">{{ item.category }}</div>
+              <div style="font-weight:600; margin-top:8px">{{ item.price }}</div>
+              <sc-if value="{{ item.hasProgress }}" hint-placeholder-val="{{ false }}">
+                <div style="height:6px; background:var(--color-neutral-200); margin-top:10px; position:relative">
+                  <div style="height:100%; background:var(--color-accent); width:{{ item.progress }}%"></div>
+                </div>
+                <div style="font-size:12px; color:var(--color-neutral-700); margin-top:4px">{{ item.progress }}% ahorrado</div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+  </main>
+  <button class="mc-fab btn btn-primary" onclick="{{ noop }}" style="position:fixed; bottom:24px; right:24px; width:56px; height:56px; border-radius:0; align-items:center; justify-content:center; box-shadow:var(--shadow-lg); z-index:10">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+  </button>
+</div>
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 56"><rect width="120" height="56" fill="#ec3013"/><text x="60" y="32" font-size="14" fill="#fff" text-anchor="middle" font-family="sans-serif">MI CENTRO</text></svg></template>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    menuOpen: false,
+    view: 'dashboard',
+    invTab: 'webs',
+    controlTab: 'mantenimiento',
+    balances: { bbva: 0.92, imagin: 48.21, revolut: 0, tradeRepublic: 100.08, myInvestor: 0 },
+    expenseAccount: 'bbva',
+    expenseAmount: '',
+    expenseType: 'gasto',
+    commandOpen: false,
+    commandQuery: '',
+    quickAddOpen: false,
+    pinEnabled: false,
+    pinValue: '',
+    categories: ['Fotografía', 'Vídeo', 'Drone', 'Tecnología', 'Impresión 3D', 'Software'],
+    locations: ['Granada', 'Finlandia', 'Habitación', 'Mochila fotografía', 'Mochila drone', 'Estantería'],
+    newCategory: '',
+    newLocation: '',
+    savedAmount: 400,
+    objectEdits: {},
+    jobs: [],
+    clients: [],
+    newJobName: '',
+    newJobClient: '',
+    newJobDate: '',
+    newJobPrice: '',
+    newClientName: '',
+    newClientContact: '',
+    maintenances: [],
+    warranties: [],
+    loans: [],
+    consumables: [],
+    kits: [],
+    newMaintName: '', newMaintNext: '', newMaintNotes: '',
+    newWarrantyObject: '', newWarrantyEnd: '',
+    newLoanObject: '', newLoanPerson: '', newLoanDue: '',
+    newConsumableName: '', newConsumableStatus: 'Mucho',
+    newKitName: '', newKitItems: '',
+    inboxItems: [
+      { id: 1, text: 'Limpiar sensor Canon', type: 'Mantenimiento' },
+      { id: 2, text: 'Actualizar Figuras3D Shop', type: 'Web/proyecto' },
+      { id: 3, text: 'Revisar Nazareno 3D', type: 'Web/proyecto' },
+    ],
+    inboxOpen: false,
+    newInboxText: '',
+  };
+  componentDidMount() {
+    this.onKey = (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        this.setState({ commandOpen: true });
+      } else if (e.key === 'Escape') {
+        this.setState({ commandOpen: false, quickAddOpen: false });
+      }
+    };
+    document.addEventListener('keydown', this.onKey);
+  }
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.onKey);
+  }
+  updateObject(name, patch) {
+    this.setState(s => ({ objectEdits: { ...s.objectEdits, [name]: { ...(s.objectEdits[name] || {}), ...patch } } }));
+  }
+  updateJob(id, patch) {
+    this.setState(s => ({ jobs: s.jobs.map(j => (j.id === id ? { ...j, ...patch } : j)) }));
+  }
+  removeFrom(key, id) {
+    this.setState(s => ({ [key]: s[key].filter(x => x.id !== id) }));
+  }
+  updateIn(key, id, patch) {
+    this.setState(s => ({ [key]: s[key].map(x => (x.id === id ? { ...x, ...patch } : x)) }));
+  }
+  fmt(n) {
+    const fixed = Math.abs(n).toFixed(2);
+    const [intPart, dec] = fixed.split('.');
+    const withDots = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    return (n < 0 ? '-' : '') + withDots + ',' + dec + ' €';
+  }
+  navStyle(id) {
+    const active = this.state.view === id;
+    return { bg: active ? 'var(--color-accent)' : 'transparent', color: active ? '#fff' : 'var(--color-text)', weight: active ? 600 : 400 };
+  }
+  renderVals() {
+    const { bbva, imagin, revolut, tradeRepublic, myInvestor } = this.state.balances;
+    const patrimonio = bbva + imagin + revolut + tradeRepublic + myInvestor;
+    const view = this.state.view;
+
+    const invTabDefs = [
+      { id: 'fotografia', label: 'Fotografía' },
+      { id: 'video', label: 'Vídeo' },
+      { id: 'drone', label: 'Drone' },
+      { id: 'tecnologia', label: 'Tecnología' },
+      { id: 'impresion3d', label: 'Impresión 3D' },
+      { id: 'software', label: 'Software' },
+      { id: 'relojes', label: 'Relojes' },
+      { id: 'mochilas', label: 'Mochilas' },
+      { id: 'webs', label: 'Webs' },
+    ];
+    const invTabs = invTabDefs.map(t => ({
+      label: t.label,
+      bg: this.state.invTab === t.id ? 'var(--color-accent)' : 'transparent',
+      color: this.state.invTab === t.id ? '#fff' : 'var(--color-text)',
+      select: () => this.setState({ invTab: t.id }),
+    }));
+
+    const controlTabDefs = [
+      { id: 'mantenimiento', label: 'Mantenimiento' },
+      { id: 'garantias', label: 'Garantías' },
+      { id: 'prestamos', label: 'Préstamos' },
+      { id: 'consumibles', label: 'Consumibles' },
+      { id: 'kits', label: 'Kits' },
+    ];
+    const controlTabs = controlTabDefs.map(t => ({
+      label: t.label,
+      bg: this.state.controlTab === t.id ? 'var(--color-accent)' : 'transparent',
+      color: this.state.controlTab === t.id ? '#fff' : 'var(--color-text)',
+      select: () => this.setState({ controlTab: t.id }),
+    }));
+
+    const objects = [
+      { cat: 'tecnologia', name: 'Glorious Model O', sub: 'Periféricos / Ratón', price: '100,00 €', estado: 'En uso' },
+      { cat: 'tecnologia', name: 'Teclado principal', sub: 'Periféricos / Teclado', price: '60,00 €', estado: 'En uso', note: 'Modelo exacto: pendiente' },
+      { cat: 'tecnologia', name: 'Teclado Mars Gaming', sub: 'Periféricos / Teclado', price: '18,00 €', estado: 'En uso', note: 'Modelo exacto: pendiente' },
+      { cat: 'tecnologia', name: 'Alfombrilla grande', sub: 'Periféricos', price: '10,00 €', estado: 'En uso' },
+      { cat: 'tecnologia', name: 'Monitor LG 60Hz #1', sub: 'Monitor', price: '40,00 €', estado: 'En uso', note: 'Modelo exacto: pendiente' },
+      { cat: 'tecnologia', name: 'Monitor LG 60Hz #2', sub: 'Monitor', price: '40,00 €', estado: 'En uso', note: 'Modelo exacto: pendiente' },
+      { cat: 'tecnologia', name: 'Monitor LG 60Hz #3', sub: 'Monitor', price: '40,00 €', estado: 'En uso', note: 'Modelo exacto: pendiente' },
+      { cat: 'tecnologia', name: 'Monitor MSI 240Hz', sub: 'Monitor', price: '160,00 €', estado: 'En uso', note: 'Modelo exacto: pendiente' },
+      { cat: 'tecnologia', name: 'Monitor 75Hz', sub: 'Monitor', price: '100,00 €', estado: 'En uso', note: 'Marca/modelo: pendiente' },
+      { cat: 'tecnologia', name: 'Caja / torre PC', sub: 'PC / Caja', price: '30,00 €', estado: 'En uso', note: 'Modelo exacto: pendiente' },
+      { cat: 'tecnologia', name: 'AMD Radeon RX 580', sub: 'PC / Gráfica', price: '≈95,00 €', estado: 'En uso (pendiente confirmar)', note: 'Modelo exacto: pendiente' },
+      { cat: 'tecnologia', name: 'AMD Radeon RX 6600', sub: 'PC / Gráfica', price: '≈160,00 €', estado: 'En uso', note: 'Modelo exacto: pendiente' },
+      { cat: 'tecnologia', name: 'Placa base Gigabyte', sub: 'PC / Placa base', price: '75,00 €', estado: 'En uso', note: 'Modelo exacto: pendiente' },
+      { cat: 'tecnologia', name: 'AMD Ryzen 5 3600X', sub: 'PC / Procesador', price: '≈90,00 €', estado: 'En uso' },
+      { cat: 'tecnologia', name: 'Acer Nitro 5', sub: 'Portátil / Gaming', price: '≈600,00 €', estado: 'En uso', note: 'Estimado · modelo AN515-XX, CPU/GPU/RAM/almacenamiento pendientes' },
+      { cat: 'fotografia', name: 'Canon EOS R6 Mark II', sub: 'Cámara principal', price: '≈2.000,00 €', estado: 'En uso', note: 'Estimado (mercado usado)' },
+      { cat: 'fotografia', name: 'Objetivo Canon 50mm', sub: 'Objetivo', price: '≈200,00 €', estado: 'En uso', note: 'Estimado · modelo exacto pendiente' },
+      { cat: 'fotografia', name: 'Objetivo Canon 24-105mm', sub: 'Objetivo', price: '≈500,00 €', estado: 'En uso', note: 'Estimado · modelo exacto pendiente' },
+      { cat: 'video', name: 'DJI Osmo Mobile 7', sub: 'Estabilizador', price: '≈140,00 €', estado: 'En uso', note: 'Estimado' },
+      { cat: 'drone', name: 'DJI Neo 2', sub: 'Drone', price: '≈250,00 €', estado: 'En uso', note: 'Estimado' },
+      { cat: 'drone', name: 'Mando DJI RC3', sub: 'Mando', price: '≈180,00 €', estado: 'En uso', note: 'Estimado · relacionado con DJI Neo 2' },
+      { cat: 'drone', name: 'Batería DJI Neo 2 #1', sub: 'Batería', price: '≈35,00 €', estado: 'En uso', note: 'Estimado · relacionado con DJI Neo 2' },
+      { cat: 'drone', name: 'Batería DJI Neo 2 #2', sub: 'Batería', price: '≈35,00 €', estado: 'En uso', note: 'Estimado · relacionado con DJI Neo 2' },
+      { cat: 'drone', name: 'Batería DJI Neo 2 #3', sub: 'Batería', price: '≈35,00 €', estado: 'En uso', note: 'Estimado · relacionado con DJI Neo 2' },
+      { cat: 'impresion3d', name: 'Creality K1C', sub: 'Impresora', price: '≈600,00 €', estado: 'En uso', note: 'Estimado' },
+      { cat: 'impresion3d', name: 'CFS-C', sub: 'Accesorio', price: '≈150,00 €', estado: 'En uso', note: 'Estimado · relacionado con Creality K1C' },
+      { cat: 'relojes', name: 'Apple Watch Series 7', sub: 'Smartwatch', price: '≈190,00 €', estado: 'En uso', note: 'Modelo/tamaño exacto: pendiente' },
+      { cat: 'relojes', name: 'CIGA Design Aviation', sub: 'Mecánico', price: '200,00 €', estado: 'En uso' },
+      { cat: 'relojes', name: 'Omega × Swatch Mission to Pluto', sub: 'Colección', price: '300,00 €', estado: 'En uso' },
+      { cat: 'relojes', name: 'Festina', sub: 'Reloj', price: '≈120,00 €', estado: 'En uso', note: 'Estimado · modelo exacto pendiente' },
+      { cat: 'mochilas', name: 'TUMI edición especial Año del Caballo', sub: 'Premium', price: '≈400,00 €', estado: 'En uso', note: 'Estimado · modelo exacto pendiente' },
+      { cat: 'software', name: 'Luminar Neo', sub: 'Fotografía', price: '60,00 €', estado: 'En uso', note: 'Tipo de licencia: pendiente' },
+      { cat: 'software', name: 'DaVinci Resolve Free', sub: 'Vídeo', price: '0,00 €', estado: 'En uso', note: 'Gratuito' },
+      { cat: 'software', name: 'HandBrake', sub: 'Vídeo / Conversión', price: '0,00 €', estado: 'En uso', note: 'Gratuito' },
+      { cat: 'software', name: 'Narrative Select', sub: 'Fotografía / Selección', price: 'Pendiente', estado: 'En uso' },
+    ];
+    const objectsMerged = objects.map(o => ({ ...o, ...(this.state.objectEdits[o.name] || {}) }));
+    const estadoOptions = ['En uso', 'Guardado', 'Prestado', 'En reparación', 'Vendido', 'Perdido', 'Dañado', 'Retirado'];
+    const noValueStates = ['Vendido', 'Perdido', 'Retirado'];
+    const objectsInTab = objectsMerged
+      .filter(o => o.cat === this.state.invTab)
+      .map(o => ({
+        ...o,
+        excluded: noValueStates.includes(o.estado),
+        opacity: noValueStates.includes(o.estado) ? 0.55 : 1,
+        setPrice: (e) => this.updateObject(o.name, { price: e.target.value }),
+        setEstado: (e) => this.updateObject(o.name, { estado: e.target.value }),
+      }));
+
+    const webs = [
+      { name: 'Lens by JRR', categoria: 'Fotografía / Blog', estado: 'Activa', tareas: 'sin pendientes' },
+      { name: 'Diario personal', categoria: 'Personal / Web', estado: 'Activa', tareas: 'sin pendientes' },
+      { name: 'Gobergo', categoria: 'Semana Santa / Web', estado: 'Activa', tareas: 'SEO, móvil, galería' },
+      { name: 'JRR Foto', categoria: 'Fotografía / Portfolio', estado: 'Activa', tareas: 'sin pendientes' },
+      { name: 'Nazareno 3D', categoria: 'Impresión 3D / Web', estado: 'Activa', tareas: 'sin pendientes' },
+      { name: 'Figuras3D Shop', categoria: 'Impresión 3D / Tienda', estado: 'Activa', tareas: 'productos, diseño, fotos' },
+    ];
+
+    const rawWishlist = [
+      { name: 'Reachy Mini Wireless AI Robot', category: 'Tecnología / Robot', price: '499,00 €', priority: 'Media' },
+      { name: '8BitDo Ultimate 2', category: 'Gaming / Accesorios', price: '60,00 €', priority: 'Baja' },
+      { name: 'Caja para torre PC', category: 'Tecnología / PC', price: '80,00 €', priority: 'Media' },
+      { name: 'Canon RF 28-70mm f/2.8 IS STM', category: 'Fotografía / Objetivo', price: '≈700,00 €', priority: 'Alta' },
+      { name: 'Canon RF 75-300mm f/4-5.6', category: 'Fotografía / Objetivo', price: 'Pendiente', priority: 'Media' },
+      { name: 'DJI Air 3S Fly More Combo RC2', category: 'Drone', price: '≈1.200,00 €', priority: 'Alta' },
+      { name: 'Bolsa de golf', category: 'Deporte / Golf', price: '500-600 €', priority: 'Baja' },
+      { name: 'DJI Mic Mini', category: 'Vídeo / Audio', price: '≈100,00 €', priority: 'Media' },
+      { name: 'Bambu Lab H2C', category: 'Impresión 3D', price: '≈2.000,00 €', priority: 'Media' },
+      { name: 'Filtro ND para DJI Neo 2', category: 'Drone / Accesorio', price: '30,00 €', priority: 'Baja' },
+      { name: 'Kodak Mini 2', category: 'Fotografía / Impresión portátil', price: 'Pendiente', priority: 'Baja' },
+    ];
+    const savedAmount = this.state.savedAmount;
+    const priceToNumber = (p) => {
+      const m = p.replace('≈', '').match(/([\d.,]+)\s*-\s*([\d.,]+)|([\d.,]+)/);
+      if (!m) return null;
+      const clean = (s) => parseFloat(s.replace(/\./g, '').replace(',', '.'));
+      if (m[1] && m[2]) return (clean(m[1]) + clean(m[2])) / 2;
+      return m[3] ? clean(m[3]) : null;
+    };
+    const wishlist = rawWishlist
+      .map(item => {
+        const numPrice = priceToNumber(item.price);
+        const progress = numPrice ? Math.min(100, Math.round((savedAmount / numPrice) * 100)) : null;
+        return { ...item, progress, hasProgress: progress !== null };
+      })
+      .sort((a, b) => (b.progress ?? -1) - (a.progress ?? -1));
+
+    const jobStates = ['Solicitud', 'Presupuesto', 'Pendiente confirmación', 'Confirmado', 'Realizado', 'Seleccionando', 'Editando', 'Subiendo', 'Entregado', 'Cobrado', 'Cancelado'];
+    const activeJobs = this.state.jobs.filter(j => !j.archived);
+    const num = (v) => parseFloat(String(v).replace(',', '.')) || 0;
+    const pendienteCobrar = activeJobs
+      .filter(j => j.estado !== 'Cancelado')
+      .reduce((s, j) => s + Math.max(0, num(j.price) - num(j.cobrado)), 0);
+    const thisMonth = new Date().toISOString().slice(0, 7);
+    const ingresosMes = activeJobs
+      .filter(j => (j.date || '').slice(0, 7) === thisMonth)
+      .reduce((s, j) => s + num(j.cobrado), 0);
+    const today = new Date().toISOString().slice(0, 10);
+    const proximosCount = activeJobs.filter(j => j.date >= today && !['Cobrado', 'Cancelado', 'Entregado'].includes(j.estado)).length;
+    const jobRows = activeJobs.map(j => ({
+      ...j,
+      priceDisplay: this.fmt(num(j.price)),
+      pendingDisplay: this.fmt(Math.max(0, num(j.price) - num(j.cobrado))),
+      setPrice: (e) => this.updateJob(j.id, { price: e.target.value }),
+      setCobrado: (e) => this.updateJob(j.id, { cobrado: e.target.value }),
+      setEstado: (e) => this.updateJob(j.id, { estado: e.target.value }),
+      archive: () => this.updateJob(j.id, { archived: true }),
+    }));
+
+    const searchable = [
+      ...webs.map(w => ({ label: w.name, type: 'WEB' })),
+      ...wishlist.map(w => ({ label: w.name, type: 'WISHLIST' })),
+    ];
+    const q = this.state.commandQuery.trim().toLowerCase();
+    const commandResults = q ? searchable.filter(r => r.label.toLowerCase().includes(q)) : [];
+
+    return {
+      sidebarClass: this.state.menuOpen ? 'open' : '',
+      overlayClass: this.state.menuOpen ? 'open' : '',
+      openMenu: () => this.setState({ menuOpen: true }),
+      closeMenu: () => this.setState({ menuOpen: false }),
+      noop: () => {},
+      navDashboard: this.navStyle('dashboard'),
+      navInventario: this.navStyle('inventario'),
+      navTrabajos: this.navStyle('trabajos'),
+      navDinero: this.navStyle('dinero'),
+      navControl: this.navStyle('control'),
+      navFuturo: this.navStyle('futuro'),
+      navEstadisticas: this.navStyle('estadisticas'),
+      navConfiguracion: this.navStyle('configuracion'),
+      goDashboard: () => this.setState({ view: 'dashboard', menuOpen: false }),
+      goInventario: () => this.setState({ view: 'inventario', menuOpen: false }),
+      goTrabajos: () => this.setState({ view: 'trabajos', menuOpen: false }),
+      goDinero: () => this.setState({ view: 'dinero', menuOpen: false }),
+      goControl: () => this.setState({ view: 'control', menuOpen: false }),
+      goFuturo: () => this.setState({ view: 'futuro', menuOpen: false }),
+      goEstadisticas: () => this.setState({ view: 'estadisticas', menuOpen: false }),
+      goConfiguracion: () => this.setState({ view: 'configuracion', menuOpen: false }),
+      isDashboard: view === 'dashboard',
+      isInventario: view === 'inventario',
+      isTrabajos: view === 'trabajos',
+      isDinero: view === 'dinero',
+      isControl: view === 'control',
+      isFuturo: view === 'futuro',
+      isEstadisticas: view === 'estadisticas',
+      isConfiguracion: view === 'configuracion',
+      commandOpen: this.state.commandOpen,
+      commandQuery: this.state.commandQuery,
+      commandResults,
+      commandEmpty: q.length > 0 && commandResults.length === 0,
+      openCommand: () => this.setState({ commandOpen: true }),
+      closeCommand: () => this.setState({ commandOpen: false, commandQuery: '' }),
+      stop: (e) => e.stopPropagation(),
+      setCommandQuery: (e) => this.setState({ commandQuery: e.target.value }),
+      quickAddOpen: this.state.quickAddOpen,
+      toggleQuickAdd: () => this.setState(s => ({ quickAddOpen: !s.quickAddOpen })),
+      closeQuickAdd: () => this.setState({ quickAddOpen: false }),
+      quickAddOptions: ['Objeto', 'Trabajo', 'Gasto', 'Cobro', 'Wishlist', 'Mantenimiento', 'Cliente', 'Inversión', 'Suscripción', 'Web/proyecto', '⚡ Apuntar rápido'],
+      pinEnabled: this.state.pinEnabled,
+      pinValue: this.state.pinValue,
+      pinButtonLabel: this.state.pinEnabled ? 'Desactivar' : 'Activar',
+      togglePin: () => this.setState(s => ({ pinEnabled: !s.pinEnabled })),
+      setPinValue: (e) => this.setState({ pinValue: e.target.value }),
+      categories: this.state.categories.map(c => ({ name: c, remove: () => this.setState(s => ({ categories: s.categories.filter(x => x !== c) })) })),
+      locations: this.state.locations.map(l => ({ name: l, remove: () => this.setState(s => ({ locations: s.locations.filter(x => x !== l) })) })),
+      newCategory: this.state.newCategory,
+      newLocation: this.state.newLocation,
+      setNewCategory: (e) => this.setState({ newCategory: e.target.value }),
+      setNewLocation: (e) => this.setState({ newLocation: e.target.value }),
+      addCategory: () => {
+        const v = this.state.newCategory.trim();
+        if (!v) return;
+        this.setState(s => ({ categories: [...s.categories, v], newCategory: '' }));
+      },
+      addLocation: () => {
+        const v = this.state.newLocation.trim();
+        if (!v) return;
+        this.setState(s => ({ locations: [...s.locations, v], newLocation: '' }));
+      },
+      jobStates,
+      jobRows,
+      hasJobs: jobRows.length > 0,
+      noJobs: jobRows.length === 0,
+      clients: this.state.clients,
+      hasClients: this.state.clients.length > 0,
+      noClients: this.state.clients.length === 0,
+      newJobName: this.state.newJobName,
+      newJobClient: this.state.newJobClient,
+      newJobDate: this.state.newJobDate,
+      newJobPrice: this.state.newJobPrice,
+      newClientName: this.state.newClientName,
+      newClientContact: this.state.newClientContact,
+      setNewJobName: (e) => this.setState({ newJobName: e.target.value }),
+      setNewJobClient: (e) => this.setState({ newJobClient: e.target.value }),
+      setNewJobDate: (e) => this.setState({ newJobDate: e.target.value }),
+      setNewJobPrice: (e) => this.setState({ newJobPrice: e.target.value }),
+      setNewClientName: (e) => this.setState({ newClientName: e.target.value }),
+      setNewClientContact: (e) => this.setState({ newClientContact: e.target.value }),
+      addJob: () => {
+        const name = this.state.newJobName.trim();
+        if (!name) return;
+        this.setState(s => ({
+          jobs: [...s.jobs, { id: Date.now(), name, client: s.newJobClient.trim(), date: s.newJobDate, price: s.newJobPrice, cobrado: '', estado: 'Solicitud', archived: false }],
+          newJobName: '', newJobClient: '', newJobDate: '', newJobPrice: '',
+        }));
+      },
+      addClient: () => {
+        const name = this.state.newClientName.trim();
+        if (!name) return;
+        this.setState(s => ({
+          clients: [...s.clients, { id: Date.now(), name, contact: s.newClientContact.trim() }],
+          newClientName: '', newClientContact: '',
+        }));
+      },
+      pendienteCobrarDisplay: this.fmt(pendienteCobrar),
+      ingresosMesDisplay: this.fmt(ingresosMes),
+      proximosCount,
+
+      maintenances: this.state.maintenances.map(m => ({ ...m, remove: () => this.removeFrom('maintenances', m.id), setStatus: (e) => this.updateIn('maintenances', m.id, { status: e.target.value }) })),
+      hasMaintenances: this.state.maintenances.length > 0,
+      newMaintName: this.state.newMaintName,
+      newMaintNext: this.state.newMaintNext,
+      newMaintNotes: this.state.newMaintNotes,
+      setNewMaintName: (e) => this.setState({ newMaintName: e.target.value }),
+      setNewMaintNext: (e) => this.setState({ newMaintNext: e.target.value }),
+      setNewMaintNotes: (e) => this.setState({ newMaintNotes: e.target.value }),
+      addMaintenance: () => {
+        const name = this.state.newMaintName.trim();
+        if (!name) return;
+        this.setState(s => ({
+          maintenances: [...s.maintenances, { id: Date.now(), name, next: s.newMaintNext, notes: s.newMaintNotes, status: 'Pendiente' }],
+          newMaintName: '', newMaintNext: '', newMaintNotes: '',
+        }));
+      },
+      maintStatusOptions: ['Pendiente', 'Próximo', 'Realizado', 'Retrasado'],
+
+      warranties: this.state.warranties.map(w => ({ ...w, remove: () => this.removeFrom('warranties', w.id) })),
+      hasWarranties: this.state.warranties.length > 0,
+      newWarrantyObject: this.state.newWarrantyObject,
+      newWarrantyEnd: this.state.newWarrantyEnd,
+      setNewWarrantyObject: (e) => this.setState({ newWarrantyObject: e.target.value }),
+      setNewWarrantyEnd: (e) => this.setState({ newWarrantyEnd: e.target.value }),
+      addWarranty: () => {
+        const object = this.state.newWarrantyObject.trim();
+        if (!object) return;
+        this.setState(s => ({
+          warranties: [...s.warranties, { id: Date.now(), object, end: s.newWarrantyEnd }],
+          newWarrantyObject: '', newWarrantyEnd: '',
+        }));
+      },
+
+      loans: this.state.loans.map(l => ({ ...l, remove: () => this.removeFrom('loans', l.id) })),
+      hasLoans: this.state.loans.length > 0,
+      newLoanObject: this.state.newLoanObject,
+      newLoanPerson: this.state.newLoanPerson,
+      newLoanDue: this.state.newLoanDue,
+      setNewLoanObject: (e) => this.setState({ newLoanObject: e.target.value }),
+      setNewLoanPerson: (e) => this.setState({ newLoanPerson: e.target.value }),
+      setNewLoanDue: (e) => this.setState({ newLoanDue: e.target.value }),
+      addLoan: () => {
+        const object = this.state.newLoanObject.trim();
+        const person = this.state.newLoanPerson.trim();
+        if (!object || !person) return;
+        this.setState(s => ({
+          loans: [...s.loans, { id: Date.now(), object, person, due: s.newLoanDue }],
+          newLoanObject: '', newLoanPerson: '', newLoanDue: '',
+        }));
+      },
+
+      consumables: this.state.consumables.map(c => ({ ...c, remove: () => this.removeFrom('consumables', c.id), setStatus: (e) => this.updateIn('consumables', c.id, { status: e.target.value }) })),
+      hasConsumables: this.state.consumables.length > 0,
+      newConsumableName: this.state.newConsumableName,
+      newConsumableStatus: this.state.newConsumableStatus,
+      setNewConsumableName: (e) => this.setState({ newConsumableName: e.target.value }),
+      setNewConsumableStatus: (e) => this.setState({ newConsumableStatus: e.target.value }),
+      consumableStatusOptions: ['Nuevo', 'Mucho', 'Medio', 'Poco', 'Agotado'],
+      addConsumable: () => {
+        const name = this.state.newConsumableName.trim();
+        if (!name) return;
+        this.setState(s => ({
+          consumables: [...s.consumables, { id: Date.now(), name, status: s.newConsumableStatus }],
+          newConsumableName: '',
+        }));
+      },
+
+      kits: this.state.kits.map(k => ({
+        ...k,
+        remove: () => this.removeFrom('kits', k.id),
+        reset: () => this.updateIn('kits', k.id, { items: k.items.map(i => ({ ...i, checked: false })) }),
+        itemsView: k.items.map((it, idx) => ({
+          ...it,
+          toggle: () => this.updateIn('kits', k.id, { items: k.items.map((x, i2) => (i2 === idx ? { ...x, checked: !x.checked } : x)) }),
+        })),
+        allChecked: k.items.length > 0 && k.items.every(i => i.checked),
+      })),
+      hasKits: this.state.kits.length > 0,
+      newKitName: this.state.newKitName,
+      newKitItems: this.state.newKitItems,
+      setNewKitName: (e) => this.setState({ newKitName: e.target.value }),
+      setNewKitItems: (e) => this.setState({ newKitItems: e.target.value }),
+      addKit: () => {
+        const name = this.state.newKitName.trim();
+        if (!name) return;
+        const items = this.state.newKitItems.split(',').map(s => s.trim()).filter(Boolean).map(n => ({ name: n, checked: false }));
+        this.setState(s => ({
+          kits: [...s.kits, { id: Date.now(), name, items }],
+          newKitName: '', newKitItems: '',
+        }));
+      },
+
+      inboxItems: this.state.inboxItems.map(i => ({
+        ...i,
+        resolve: () => this.setState(s => ({ inboxItems: s.inboxItems.filter(x => x.id !== i.id) })),
+        setType: (e) => this.updateIn('inboxItems', i.id, { type: e.target.value }),
+      })),
+      inboxCount: this.state.inboxItems.length,
+      inboxOpen: this.state.inboxOpen,
+      openInbox: () => this.setState({ inboxOpen: true }),
+      closeInbox: () => this.setState({ inboxOpen: false }),
+      newInboxText: this.state.newInboxText,
+      setNewInboxText: (e) => this.setState({ newInboxText: e.target.value }),
+      inboxTypes: ['Nota', 'Objeto', 'Trabajo', 'Gasto', 'Cobro', 'Wishlist', 'Mantenimiento', 'Cliente', 'Inversión', 'Suscripción', 'Web/proyecto'],
+      addInboxNote: () => {
+        const text = this.state.newInboxText.trim();
+        if (!text) return;
+        this.setState(s => ({
+          inboxItems: [...s.inboxItems, { id: Date.now(), text, type: 'Nota' }],
+          newInboxText: '',
+        }));
+      },
+
+      savedAmount: this.state.savedAmount,
+      savedDisplay: this.fmt(this.state.savedAmount),
+      setSavedAmount: (e) => this.setState({ savedAmount: parseFloat(e.target.value) || 0 }),
+      isWebsTab: this.state.invTab === 'webs',
+      isEmptyInvTab: this.state.invTab !== 'webs' && objectsInTab.length === 0,
+      hasObjectsInTab: this.state.invTab !== 'webs' && objectsInTab.length > 0,
+      objectsInTab,
+      estadoOptions,
+      totalObjectsCount: objectsMerged.length,
+      totalObjectsValue: this.fmt(objectsMerged.reduce((sum, o) => {
+        if (noValueStates.includes(o.estado)) return sum;
+        const n = priceToNumber(o.price || '');
+        return sum + (n || 0);
+      }, 0)),
+      invTabs,
+      controlTabs,
+      controlTabLabel: controlTabDefs.find(t => t.id === this.state.controlTab).label,
+      isMaintTab: this.state.controlTab === 'mantenimiento',
+      isWarrantyTab: this.state.controlTab === 'garantias',
+      isLoanTab: this.state.controlTab === 'prestamos',
+      isConsumableTab: this.state.controlTab === 'consumibles',
+      isKitTab: this.state.controlTab === 'kits',
+      maintDisplay: this.state.controlTab === 'mantenimiento' ? 'block' : 'none',
+      warrantyDisplay: this.state.controlTab === 'garantias' ? 'block' : 'none',
+      loanDisplay: this.state.controlTab === 'prestamos' ? 'block' : 'none',
+      consumableDisplay: this.state.controlTab === 'consumibles' ? 'block' : 'none',
+      kitDisplay: this.state.controlTab === 'kits' ? 'block' : 'none',
+      webs,
+      wishlist,
+      patrimonioDisplay: this.fmt(patrimonio),
+      bbvaDisplay: this.fmt(bbva),
+      imaginDisplay: this.fmt(imagin),
+      revolutDisplay: this.fmt(revolut),
+      tradeRepublicDisplay: this.fmt(tradeRepublic),
+      myInvestorDisplay: this.fmt(myInvestor),
+      investedTotalDisplay: this.fmt(tradeRepublic + myInvestor),
+      trInterestDisplay: this.fmt((tradeRepublic * 0.03) / 365),
+      expenseAccount: this.state.expenseAccount,
+      expenseAmount: this.state.expenseAmount,
+      expenseType: this.state.expenseType,
+      setExpenseAccount: (e) => this.setState({ expenseAccount: e.target.value }),
+      setExpenseAmount: (e) => this.setState({ expenseAmount: e.target.value }),
+      setExpenseType: (e) => this.setState({ expenseType: e.target.value }),
+      registerExpense: () => {
+        const amount = parseFloat(this.state.expenseAmount);
+        if (!amount || amount <= 0) return;
+        const acc = this.state.expenseAccount;
+        const sign = this.state.expenseType === 'ingreso' ? 1 : -1;
+        this.setState(s => ({
+          balances: { ...s.balances, [acc]: Math.max(0, s.balances[acc] + sign * amount) },
+          expenseAmount: '',
+        }));
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>
