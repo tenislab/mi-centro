@@ -145,7 +145,7 @@
           <div style="padding:20px; border-right:2px solid var(--color-divider)"><div class="card-kicker">Patrimonio financiero</div><div style="font-family:var(--font-heading); font-size:27px; font-weight:700; white-space:nowrap">{{ patrimonioDisplay }}</div></div>
           <div style="padding:20px; border-right:2px solid var(--color-divider)"><div class="card-kicker">Valor equipo</div><div style="font-family:var(--font-heading); font-size:27px; font-weight:700; white-space:nowrap">{{ totalObjectsValue }}</div></div>
           <div style="padding:20px; border-right:2px solid var(--color-divider)"><div class="card-kicker">Ingresos mes</div><div style="font-family:var(--font-heading); font-size:27px; font-weight:700; color:var(--color-accent-700); white-space:nowrap">{{ ingresosMesDisplay }}</div></div>
-          <div style="padding:20px; border-right:2px solid var(--color-divider)"><div class="card-kicker">Wishlist</div><div style="font-family:var(--font-heading); font-size:27px; font-weight:700; white-space:nowrap">11</div></div>
+          <div style="padding:20px; border-right:2px solid var(--color-divider)"><div class="card-kicker">Wishlist</div><div style="font-family:var(--font-heading); font-size:27px; font-weight:700; white-space:nowrap">{{ wishlistCount }}</div></div>
           <div style="padding:20px"><div class="card-kicker">Suscripciones/mes</div><div style="font-family:var(--font-heading); font-size:27px; font-weight:700; white-space:nowrap">0,00 €</div></div>
         </div>
       </div>
@@ -163,6 +163,7 @@
           <div style="padding:16px; border-right:2px solid var(--color-divider)"><span class="tag tag-neutral">Cuenta</span><div style="font-weight:600; margin-top:8px">BBVA</div><div style="font-size:15px; margin-top:4px; white-space:nowrap">{{ bbvaDisplay }}</div></div>
           <div style="padding:16px; border-right:2px solid var(--color-divider)"><span class="tag tag-neutral">Cuenta</span><div style="font-weight:600; margin-top:8px">Imagin</div><div style="font-size:15px; margin-top:4px; white-space:nowrap">{{ imaginDisplay }}</div></div>
           <div style="padding:16px; border-right:2px solid var(--color-divider)"><span class="tag tag-neutral">Cuenta</span><div style="font-weight:600; margin-top:8px">Revolut</div><div style="font-size:15px; margin-top:4px; white-space:nowrap">{{ revolutDisplay }}</div></div>
+          <div style="padding:16px; border-right:2px solid var(--color-divider)"><span class="tag tag-neutral">Cuenta</span><div style="font-weight:600; margin-top:8px">Efectivo</div><div style="font-size:15px; margin-top:4px; white-space:nowrap">{{ efectivoDisplay }}</div></div>
           <div style="padding:16px; border-right:2px solid var(--color-divider)"><span class="tag tag-accent">Inversión</span><div style="font-weight:600; margin-top:8px">Trade Republic</div><div style="font-size:15px; margin-top:4px; white-space:nowrap">{{ tradeRepublicDisplay }}</div><div style="font-size:12px; color:var(--color-neutral-700); margin-top:4px">3% TAE · ≈ +{{ trInterestDisplay }}/día</div></div>
           <div style="padding:16px"><span class="tag tag-accent">Inversión</span><div style="font-weight:600; margin-top:8px">MyInvestor</div><div style="font-size:15px; margin-top:4px; white-space:nowrap">{{ myInvestorDisplay }}</div></div>
         </div>
@@ -172,6 +173,7 @@
             <option value="bbva">BBVA</option>
             <option value="imagin">Imagin</option>
             <option value="revolut">Revolut</option>
+            <option value="efectivo">Efectivo</option>
             <option value="tradeRepublic">Trade Republic</option>
             <option value="myInvestor">MyInvestor</option>
           </select>
@@ -324,6 +326,7 @@
           <div style="padding:16px; border-right:2px solid var(--color-divider)"><span class="tag tag-neutral">Cuenta</span><div style="font-weight:600; margin-top:8px">BBVA</div><div style="font-size:15px; margin-top:4px; white-space:nowrap">{{ bbvaDisplay }}</div></div>
           <div style="padding:16px; border-right:2px solid var(--color-divider)"><span class="tag tag-neutral">Cuenta</span><div style="font-weight:600; margin-top:8px">Imagin</div><div style="font-size:15px; margin-top:4px; white-space:nowrap">{{ imaginDisplay }}</div></div>
           <div style="padding:16px; border-right:2px solid var(--color-divider)"><span class="tag tag-neutral">Cuenta</span><div style="font-weight:600; margin-top:8px">Revolut</div><div style="font-size:15px; margin-top:4px; white-space:nowrap">{{ revolutDisplay }}</div></div>
+          <div style="padding:16px; border-right:2px solid var(--color-divider)"><span class="tag tag-neutral">Cuenta</span><div style="font-weight:600; margin-top:8px">Efectivo</div><div style="font-size:15px; margin-top:4px; white-space:nowrap">{{ efectivoDisplay }}</div></div>
           <div style="padding:16px; border-right:2px solid var(--color-divider)"><span class="tag tag-accent">Inversión</span><div style="font-weight:600; margin-top:8px">Trade Republic</div><div style="font-size:15px; margin-top:4px; white-space:nowrap">{{ tradeRepublicDisplay }}</div><div style="font-size:12px; color:var(--color-neutral-700); margin-top:4px">3% TAE · ≈ +{{ trInterestDisplay }}/día</div></div>
           <div style="padding:16px"><span class="tag tag-accent">Inversión</span><div style="font-weight:600; margin-top:8px">MyInvestor</div><div style="font-size:15px; margin-top:4px; white-space:nowrap">{{ myInvestorDisplay }}</div></div>
         </div>
@@ -332,6 +335,7 @@
             <option value="bbva">BBVA</option>
             <option value="imagin">Imagin</option>
             <option value="revolut">Revolut</option>
+            <option value="efectivo">Efectivo</option>
             <option value="tradeRepublic">Trade Republic</option>
             <option value="myInvestor">MyInvestor</option>
           </select>
@@ -497,7 +501,7 @@
         <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:2px; border:2px solid var(--color-divider)">
           <div style="padding:20px; border-right:2px solid var(--color-divider)"><div class="card-kicker">Valor equipo</div><div style="font-family:var(--font-heading); font-size:24px; font-weight:700">{{ totalObjectsValue }}</div></div>
           <div style="padding:20px; border-right:2px solid var(--color-divider)"><div class="card-kicker">Patrimonio</div><div style="font-family:var(--font-heading); font-size:24px; font-weight:700">{{ patrimonioDisplay }}</div></div>
-          <div style="padding:20px; border-right:2px solid var(--color-divider)"><div class="card-kicker">Items en Wishlist</div><div style="font-family:var(--font-heading); font-size:24px; font-weight:700">11</div></div>
+          <div style="padding:20px; border-right:2px solid var(--color-divider)"><div class="card-kicker">Items en Wishlist</div><div style="font-family:var(--font-heading); font-size:24px; font-weight:700">{{ wishlistCount }}</div></div>
           <div style="padding:20px"><div class="card-kicker">Webs activas</div><div style="font-family:var(--font-heading); font-size:24px; font-weight:700">6</div></div>
         </div>
         <div style="padding:24px; border:2px solid var(--color-divider); border-top:none; text-align:center; color:var(--color-neutral-700)">Gráficas de ingresos, gastos y uso de equipo llegarán cuando haya datos reales de trabajos.</div>
@@ -581,6 +585,31 @@
             </div>
           </sc-for>
         </div>
+
+        <div class="hr" style="margin:24px 0 16px"></div>
+        <div style="font-size:13px; text-transform:uppercase; letter-spacing:0.05em; color:var(--color-neutral-700); margin-bottom:12px">Comparador</div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px">
+          <input class="input" placeholder="Nombre (ej. DJI Air 3S vs Mavic 4 Pro)" value="{{ newCompName }}" onChange="{{ setNewCompName }}" style="flex:1; min-width:200px">
+          <input class="input" placeholder="Opción A" value="{{ newCompA }}" onChange="{{ setNewCompA }}" style="width:160px">
+          <input class="input" placeholder="Opción B" value="{{ newCompB }}" onChange="{{ setNewCompB }}" style="width:160px">
+          <input class="input" placeholder="Notas / pros y contras" value="{{ newCompNotes }}" onChange="{{ setNewCompNotes }}" style="flex:1; min-width:200px">
+          <div class="btn btn-secondary" onclick="{{ addComparison }}">Añadir comparación</div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:2px; border:2px solid var(--color-divider)">
+          <sc-for list="{{ comparisonsWithRemove }}" as="comp" hint-placeholder-count="0">
+            <div style="padding:14px 16px; border-bottom:2px solid var(--color-divider); display:flex; justify-content:space-between; align-items:flex-start; gap:12px">
+              <div>
+                <div style="font-weight:600">{{ comp.name }}</div>
+                <div class="card-meta" style="margin-top:2px">{{ comp.a }} vs {{ comp.b }}</div>
+                <div style="font-size:13px; margin-top:4px; color:var(--color-neutral-700)">{{ comp.notes }}</div>
+              </div>
+              <span onclick="{{ comp.remove }}" style="cursor:pointer; color:var(--color-neutral-700)">✕</span>
+            </div>
+          </sc-for>
+          <sc-if value="{{ noComparisons }}" hint-placeholder-val="{{ true }}">
+            <div style="padding:24px; text-align:center; color:var(--color-neutral-700)">Sin comparaciones todavía</div>
+          </sc-if>
+        </div>
       </div>
     </sc-if>
   </main>
@@ -598,7 +627,9 @@ class Component extends DCLogic {
     view: 'dashboard',
     invTab: 'webs',
     controlTab: 'mantenimiento',
-    balances: { bbva: 0.92, imagin: 48.21, revolut: 0, tradeRepublic: 100.08, myInvestor: 0 },
+    balances: { bbva: 0.92, imagin: 48.21, revolut: 0, efectivo: 0, tradeRepublic: 100.08, myInvestor: 0 },
+    comparisons: [],
+    newCompName: '', newCompA: '', newCompB: '', newCompNotes: '',
     expenseAccount: 'bbva',
     expenseAmount: '',
     expenseType: 'gasto',
@@ -640,6 +671,13 @@ class Component extends DCLogic {
     newInboxText: '',
   };
   componentDidMount() {
+    try {
+      const saved = localStorage.getItem('mi-centro-v1');
+      if (saved) {
+        const data = JSON.parse(saved);
+        this.setState({ ...data, menuOpen: false, commandOpen: false, quickAddOpen: false, inboxOpen: false, commandQuery: '' });
+      }
+    } catch (err) { /* almacenamiento no disponible */ }
     this.onKey = (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
@@ -652,6 +690,14 @@ class Component extends DCLogic {
   }
   componentWillUnmount() {
     document.removeEventListener('keydown', this.onKey);
+  }
+  componentDidUpdate() {
+    const persistKeys = ['balances', 'comparisons', 'categories', 'locations', 'savedAmount', 'objectEdits', 'jobs', 'clients', 'maintenances', 'warranties', 'loans', 'consumables', 'kits', 'inboxItems', 'pinEnabled', 'pinValue'];
+    const data = {};
+    persistKeys.forEach(k => { data[k] = this.state[k]; });
+    try {
+      localStorage.setItem('mi-centro-v1', JSON.stringify(data));
+    } catch (err) { /* almacenamiento no disponible */ }
   }
   updateObject(name, patch) {
     this.setState(s => ({ objectEdits: { ...s.objectEdits, [name]: { ...(s.objectEdits[name] || {}), ...patch } } }));
@@ -676,8 +722,8 @@ class Component extends DCLogic {
     return { bg: active ? 'var(--color-accent)' : 'transparent', color: active ? '#fff' : 'var(--color-text)', weight: active ? 600 : 400 };
   }
   renderVals() {
-    const { bbva, imagin, revolut, tradeRepublic, myInvestor } = this.state.balances;
-    const patrimonio = bbva + imagin + revolut + tradeRepublic + myInvestor;
+    const { bbva, imagin, revolut, efectivo, tradeRepublic, myInvestor } = this.state.balances;
+    const patrimonio = bbva + imagin + revolut + efectivo + tradeRepublic + myInvestor;
     const view = this.state.view;
 
     const invTabDefs = [
@@ -772,17 +818,19 @@ class Component extends DCLogic {
     ];
 
     const rawWishlist = [
-      { name: 'Reachy Mini Wireless AI Robot', category: 'Tecnología / Robot', price: '499,00 €', priority: 'Media' },
-      { name: '8BitDo Ultimate 2', category: 'Gaming / Accesorios', price: '60,00 €', priority: 'Baja' },
-      { name: 'Caja para torre PC', category: 'Tecnología / PC', price: '80,00 €', priority: 'Media' },
-      { name: 'Canon RF 28-70mm f/2.8 IS STM', category: 'Fotografía / Objetivo', price: '≈700,00 €', priority: 'Alta' },
-      { name: 'Canon RF 75-300mm f/4-5.6', category: 'Fotografía / Objetivo', price: 'Pendiente', priority: 'Media' },
-      { name: 'DJI Air 3S Fly More Combo RC2', category: 'Drone', price: '≈1.200,00 €', priority: 'Alta' },
-      { name: 'Bolsa de golf', category: 'Deporte / Golf', price: '500-600 €', priority: 'Baja' },
-      { name: 'DJI Mic Mini', category: 'Vídeo / Audio', price: '≈100,00 €', priority: 'Media' },
-      { name: 'Bambu Lab H2C', category: 'Impresión 3D', price: '≈2.000,00 €', priority: 'Media' },
+      { name: 'DJI Air 3S Fly More Combo RC2', category: 'Drone', price: '1.200,00 €', priority: 'Alta' },
+      { name: 'DJI Mic Mini 2', category: 'Vídeo / Audio', price: '100,00 €', priority: 'Media' },
       { name: 'Filtro ND para DJI Neo 2', category: 'Drone / Accesorio', price: '30,00 €', priority: 'Baja' },
+      { name: 'Canon RF 28-70mm f/2.8 IS STM', category: 'Fotografía / Objetivo', price: '700-1200 €', priority: 'Alta' },
+      { name: 'Canon EF 70-200mm f/2.8L IS USM (2ª mano + adaptador)', category: 'Fotografía / Objetivo', price: '700,00 €', priority: 'Media' },
+      { name: 'Samyang MF 14mm f/2.8 (Canon RF, 2ª mano)', category: 'Fotografía / Gran angular', price: '300,00 €', priority: 'Baja' },
+      { name: 'Flash para cámara', category: 'Fotografía / Iluminación', price: '79,00 €', priority: 'Media' },
+      { name: 'Batería extra para cámara', category: 'Fotografía / Batería', price: '54,00 €', priority: 'Media' },
+      { name: 'Reachy Mini Wireless AI Robot', category: 'Tecnología / Robot', price: '350-499 €', priority: 'Media' },
+      { name: 'Caja para torre PC', category: 'Tecnología / PC', price: '50-80 €', priority: 'Media' },
+      { name: '8BitDo Ultimate 2', category: 'Gaming / Accesorios', price: '50-60 €', priority: 'Baja' },
       { name: 'Kodak Mini 2', category: 'Fotografía / Impresión portátil', price: 'Pendiente', priority: 'Baja' },
+      { name: 'Bolsa de golf', category: 'Deporte / Golf', price: '500-600 €', priority: 'Baja' },
     ];
     const savedAmount = this.state.savedAmount;
     const priceToNumber = (p) => {
@@ -857,6 +905,8 @@ class Component extends DCLogic {
       isDinero: view === 'dinero',
       isControl: view === 'control',
       isFuturo: view === 'futuro',
+      comparisonsWithRemove: this.state.comparisons.map((c, i) => ({ ...c, remove: () => this.setState(s => ({ comparisons: s.comparisons.filter((_, j) => j !== i) })) })),
+      noComparisons: this.state.comparisons.length === 0,
       isEstadisticas: view === 'estadisticas',
       isConfiguracion: view === 'configuracion',
       commandOpen: this.state.commandOpen,
@@ -1073,10 +1123,12 @@ class Component extends DCLogic {
       kitDisplay: this.state.controlTab === 'kits' ? 'block' : 'none',
       webs,
       wishlist,
+      wishlistCount: wishlist.length,
       patrimonioDisplay: this.fmt(patrimonio),
       bbvaDisplay: this.fmt(bbva),
       imaginDisplay: this.fmt(imagin),
       revolutDisplay: this.fmt(revolut),
+      efectivoDisplay: this.fmt(efectivo),
       tradeRepublicDisplay: this.fmt(tradeRepublic),
       myInvestorDisplay: this.fmt(myInvestor),
       investedTotalDisplay: this.fmt(tradeRepublic + myInvestor),
@@ -1095,6 +1147,23 @@ class Component extends DCLogic {
         this.setState(s => ({
           balances: { ...s.balances, [acc]: Math.max(0, s.balances[acc] + sign * amount) },
           expenseAmount: '',
+        }));
+      },
+      comparisons: this.state.comparisons,
+      newCompName: this.state.newCompName,
+      newCompA: this.state.newCompA,
+      newCompB: this.state.newCompB,
+      newCompNotes: this.state.newCompNotes,
+      setNewCompName: (e) => this.setState({ newCompName: e.target.value }),
+      setNewCompA: (e) => this.setState({ newCompA: e.target.value }),
+      setNewCompB: (e) => this.setState({ newCompB: e.target.value }),
+      setNewCompNotes: (e) => this.setState({ newCompNotes: e.target.value }),
+      addComparison: () => {
+        const name = this.state.newCompName.trim();
+        if (!name) return;
+        this.setState(s => ({
+          comparisons: [...s.comparisons, { name, a: s.newCompA.trim(), b: s.newCompB.trim(), notes: s.newCompNotes.trim(), remove: null }],
+          newCompName: '', newCompA: '', newCompB: '', newCompNotes: '',
         }));
       },
     };
