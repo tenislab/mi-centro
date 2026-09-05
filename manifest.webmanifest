@@ -1,0 +1,26 @@
+{
+  "name": "MI CENTRO",
+  "short_name": "MI CENTRO",
+  "description": "Centro de control personal: inventario, trabajos, dinero, control, wishlist y estadísticas.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#07060f",
+  "theme_color": "#07060f",
+  "icons": [
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
