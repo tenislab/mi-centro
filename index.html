@@ -17,7 +17,6 @@
 <meta property="og:image" content="og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="og.png">
-
 <script src="./support.js"></script>
 </head>
 <body>
@@ -1650,6 +1649,7 @@ class Component extends DCLogic {
         wishlist: section==='futuro'&&tab==='wishlist', comparador: section==='futuro'&&tab==='comparador'},
       view, kpiBig, kpiSmall, alerts, noAlerts: alerts.length===0,
       webTasks, noWebTasks: webTasks.length===0,
+      mov:{account:st.mov.account, amount:st.mov.amount, concept:st.mov.concept},
       accountRows, accountOpts, assetRows, movRows, noMovs: movRows.length===0, invKpis,
       recentExpenses, noExpenses: recentExpenses.length===0,
       wealth:{financial:this.eur(c.accounts+c.investments), accounts:this.eur(c.accounts), investments:this.eur(c.investments),
