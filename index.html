@@ -44,6 +44,7 @@ input::placeholder,textarea::placeholder{color:rgba(255,255,255,.34)}
 .gbtn-hot{border-color:transparent;background:linear-gradient(110deg,#6ee7ff,#b78bff 55%,#ff5ea8);color:#0a0a14;box-shadow:0 10px 30px -12px rgba(183,139,255,.85)}
 .gbtn-hot:hover{filter:brightness(1.1)}
 .gbtn-s{padding:6px 12px;font-size:13px}
+@media(max-width:1100px){.gbtn-s{padding:6px 10px;font-size:12.5px}}
 .gbtn-x{padding:5px 9px;font-size:12px;color:rgba(255,255,255,.6);background:transparent;border-color:transparent}
 .gbtn-x:hover{color:#ff8dc0;background:rgba(255,94,168,.12)}
 .gtab{padding:9px 15px;border:0;border-radius:999px;background:transparent;font:inherit;font-size:14px;font-weight:600;color:rgba(255,255,255,.55);cursor:pointer;white-space:nowrap;transition:.16s}
@@ -143,7 +144,7 @@ textarea.gin{min-height:88px;resize:vertical}
       <div style="font-size:14.5px;color:rgba(255,255,255,.5);max-width:70ch;margin-top:8px">{{ page.sub }}</div>
 
       <sc-if value="{{ hasTabs }}" hint-placeholder-val="{{ false }}">
-        <div class="mc-scroll" id="mc-tabstrip" style="display:flex;gap:4px;margin:18px 0 4px;padding-bottom:4px">
+        <div class="mc-scroll" id="mc-tabstrip" style="position:relative;display:flex;gap:4px;margin:18px 0 4px;padding-bottom:4px">
           <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5">
             <button class="gtab" data-t="{{ t.k }}" aria-current="{{ t.cur }}" onClick="{{ onTab }}">{{ t.l }}</button>
           </sc-for>
@@ -212,11 +213,11 @@ textarea.gin{min-height:88px;resize:vertical}
       <!-- TABLA GENÉRICA -->
       <sc-if value="{{ view.on }}" hint-placeholder-val="{{ false }}">
         <div class="gcard mc-scroll" style="padding:0;overflow-x:auto;overflow-y:hidden">
-          <div style="min-width:680px">
+          <div style="min-width:600px">
             <div style="display:flex;gap:12px;padding:13px 18px;border-bottom:1px solid rgba(255,255,255,.12);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.48)">
               <div style="flex:2;min-width:0">{{ view.c0 }}</div>
               <sc-for list="{{ view.cols }}" as="c" hint-placeholder-count="4"><div style="flex:1;min-width:0">{{ c }}</div></sc-for>
-              <div style="width:172px;flex:none;text-align:right">Acciones</div>
+              <div style="width:250px;flex:none;text-align:right">Acciones</div>
             </div>
             <sc-for list="{{ view.rows }}" as="r" hint-placeholder-count="8">
               <div class="grow" style="display:flex;gap:12px;align-items:center;padding:13px 18px">
@@ -225,8 +226,11 @@ textarea.gin{min-height:88px;resize:vertical}
                   <div style="font-size:12.5px;color:rgba(255,255,255,.58)">{{ r.sub }}</div>
                 </div>
                 <sc-for list="{{ r.cells }}" as="c" hint-placeholder-count="4"><div style="flex:1;min-width:0;font-size:14px;color:rgba(255,255,255,.82)">{{ c }}</div></sc-for>
-                <div style="width:172px;flex:none;display:flex;gap:7px;justify-content:flex-end;align-items:center">
+                <div style="width:250px;flex:none;display:flex;gap:7px;justify-content:flex-end;align-items:center">
                   <sc-if value="{{ r.hasTag }}" hint-placeholder-val="{{ false }}"><span class="gpill {{ r.tagClass }}">{{ r.tag }}</span></sc-if>
+                  <sc-if value="{{ r.hasLink }}" hint-placeholder-val="{{ false }}">
+                    <a class="gbtn gbtn-s" href="{{ r.link }}" target="_blank" rel="noreferrer" title="Abrir la web">Abrir ↗</a>
+                  </sc-if>
                   <button class="gbtn gbtn-s" data-id="{{ r.id }}" onClick="{{ onEdit }}">Editar</button>
                   <button class="gbtn gbtn-x" data-id="{{ r.id }}" onClick="{{ onArchive }}" title="Archivar">✕</button>
                 </div>
@@ -862,9 +866,10 @@ class Component extends DCLogic {
     if(!strip) return;
     const act = strip.querySelector('[aria-current="true"]');
     if(!act) return;
-    const l = act.offsetLeft, r = l + act.offsetWidth;
-    if(l < strip.scrollLeft) strip.scrollLeft = Math.max(0, l - 12);
-    else if(r > strip.scrollLeft + strip.clientWidth) strip.scrollLeft = r - strip.clientWidth + 12;
+    // desplazamiento relativo al scroller, no al documento
+    const d = act.getBoundingClientRect().left - strip.getBoundingClientRect().left;
+    if(d < 0) strip.scrollLeft += d - 12;
+    else if(d + act.offsetWidth > strip.clientWidth) strip.scrollLeft += d + act.offsetWidth - strip.clientWidth + 12;
   }
 
   // ── datos ──
@@ -920,12 +925,13 @@ class Component extends DCLogic {
         obj('TUMI edición especial Año del Caballo','Mochilas',400,400,{brand:'TUMI',subcategory:'Premium',notes:'Estimado · modelo exacto pendiente.'})
       ],
       webs:[
-        {id:'w-lens',name:'Lens by JRR',url:'https://jrrjaime.github.io/Lesnbyjrr/',category:'Fotografía / Blog',status:'Activa',areas:'Fotografía',hosting:'GitHub Pages',domainProvider:'github.io (subdominio)',repo:'jrrjaime/Lesnbyjrr',tech:'HTML estático',purpose:'Blog de fotografía',priority:'Media',costMonth:0,costYear:0,tasks:[]},
-        {id:'w-diario',name:'Diario personal',url:'https://jrrjaime.github.io/Diario/',category:'Personal / Web',status:'Activa',areas:'Personal',hosting:'GitHub Pages',domainProvider:'github.io (subdominio)',repo:'jrrjaime/Diario',tech:'HTML estático',purpose:'Diario personal',priority:'Baja',costMonth:0,costYear:0,tasks:[]},
-        {id:'w-gobergo',name:'Gobergo',url:'https://gobergo.com',category:'Semana Santa / Web',status:'Activa',areas:'Semana Santa',hosting:'Pendiente',domainProvider:'Dominio propio gobergo.com — proveedor pendiente',repo:'Pendiente',tech:'Pendiente',purpose:'Proyecto de Semana Santa',priority:'Alta',tasks:[{t:'Mejorar SEO',done:false},{t:'Revisar móvil',done:false},{t:'Actualizar galería',done:false}]},
-        {id:'w-jrrfoto',name:'JRR Foto',url:'https://jrrfoto.vercel.app/',category:'Fotografía / Portfolio profesional',status:'Activa',areas:'Fotografía',hosting:'Vercel',domainProvider:'vercel.app (subdominio)',repo:'Pendiente',tech:'Pendiente',purpose:'Portfolio profesional de fotografía',priority:'Alta',costMonth:0,costYear:0,tasks:[]},
-        {id:'w-naz',name:'Nazareno 3D',url:'https://jrrjaime.github.io/Nazareno-3d',category:'Impresión 3D / Semana Santa',status:'Activa',areas:'Impresión 3D, Semana Santa',hosting:'GitHub Pages',domainProvider:'github.io (subdominio)',repo:'jrrjaime/Nazareno-3d',tech:'HTML estático',purpose:'Figuras 3D de Semana Santa',priority:'Media',costMonth:0,costYear:0,tasks:[{t:'Revisar Nazareno 3D',done:false}]},
-        {id:'w-fig',name:'Figuras3D Shop',url:'https://jrrjaime.github.io/Figuras3D-Shop/',category:'Impresión 3D / Tienda',status:'Activa',areas:'Impresión 3D',hosting:'GitHub Pages',domainProvider:'github.io (subdominio)',repo:'jrrjaime/Figuras3D-Shop',tech:'HTML estático',purpose:'Tienda de figuras impresas en 3D',priority:'Alta',costMonth:0,costYear:0,tasks:[{t:'Añadir productos',done:false},{t:'Revisar diseño',done:false},{t:'Preparar fotos',done:false}]}
+        {id:'w-lens',_seedRev:3,name:'Lens by JRR',url:'https://jrrjaime.github.io/Lesnbyjrr/',category:'Fotografía / Blog',status:'Activa',areas:'Fotografía',hosting:'GitHub Pages',domainProvider:'github.io (subdominio)',repo:'jrrjaime/Lesnbyjrr',tech:'HTML estático',purpose:'Blog de fotografía (enlace en la bio de Instagram)',priority:'Media',costMonth:0,costYear:0,tasks:[]},
+        {id:'w-diario',_seedRev:3,name:'Diario personal',url:'https://jrrjaime.github.io/Diario/',category:'Personal / Diario',status:'Activa',areas:'Personal',hosting:'GitHub Pages',domainProvider:'github.io (subdominio)',repo:'jrrjaime/Diario',tech:'HTML estático',purpose:'Diario personal',priority:'Baja',costMonth:0,costYear:0,tasks:[]},
+        {id:'w-tennis',_seedRev:2,name:'TennisLab',url:'https://tenislab.github.io/TennisLab/',category:'Deporte / Tenis',status:'Activa',areas:'Deporte, Tenis',hosting:'GitHub Pages',domainProvider:'github.io (subdominio)',repo:'tenislab/TennisLab',tech:'HTML estático',purpose:'Proyecto de tenis',priority:'Media',costMonth:0,costYear:0,tasks:[]},
+        {id:'w-gobergo',_seedRev:2,name:'Gobergo',url:'https://gobergo.com',category:'Semana Santa / Web',status:'Activa',areas:'Semana Santa',hosting:'Pendiente',domainProvider:'Dominio propio gobergo.com — proveedor pendiente',repo:'Pendiente',tech:'Pendiente',purpose:'Proyecto de Semana Santa',priority:'Alta',tasks:[{t:'Mejorar SEO',done:false},{t:'Revisar móvil',done:false},{t:'Actualizar galería',done:false}]},
+        {id:'w-jrrfoto',_seedRev:2,name:'JRR Foto',url:'https://jrrfoto.vercel.app/',category:'Fotografía / Portfolio profesional',status:'Activa',areas:'Fotografía',hosting:'Vercel',domainProvider:'vercel.app (subdominio)',repo:'Pendiente',tech:'Pendiente',purpose:'Portfolio profesional de fotografía',priority:'Alta',costMonth:0,costYear:0,tasks:[]},
+        {id:'w-naz',_seedRev:2,name:'Nazareno 3D',url:'https://jrrjaime.github.io/Nazareno-3d',category:'Impresión 3D / Semana Santa',status:'Activa',areas:'Impresión 3D, Semana Santa',hosting:'GitHub Pages',domainProvider:'github.io (subdominio)',repo:'jrrjaime/Nazareno-3d',tech:'HTML estático',purpose:'Figuras 3D de Semana Santa',priority:'Media',costMonth:0,costYear:0,tasks:[{t:'Revisar Nazareno 3D',done:false}]},
+        {id:'w-fig',_seedRev:2,name:'Figuras3D Shop',url:'https://jrrjaime.github.io/Figuras3D-Shop/',category:'Impresión 3D / Tienda',status:'Activa',areas:'Impresión 3D',hosting:'GitHub Pages',domainProvider:'github.io (subdominio)',repo:'jrrjaime/Figuras3D-Shop',tech:'HTML estático',purpose:'Tienda de figuras impresas en 3D',priority:'Alta',costMonth:0,costYear:0,tasks:[{t:'Añadir productos',done:false},{t:'Revisar diseño',done:false},{t:'Preparar fotos',done:false}]}
       ],
       jobs:[], clients:[], rates:[], quotes:[], payments:[], expenses:[],
       subscriptions:[{id:'s-gemini',name:'Gemini Pro (estudiante)',cost:0,period:'Anual',status:'Prueba gratuita',renewal:'',notes:'Gratis por ser estudiante. Pasa a pago al terminar el año — rellena la fecha de inicio de cobro y avisará 7 días antes.'}],
@@ -965,18 +971,30 @@ class Component extends DCLogic {
     try { const raw = localStorage.getItem(Component.KEY); if(raw) db = JSON.parse(raw); } catch(e){}
     const base = this.seed();
     if(!db || typeof db !== 'object') return base;
-    if(this.num(db.version) < base.version){
-      const mine = (db.jobs||[]).length + (db.clients||[]).length + (db.expenses||[]).length + (db.movements||[]).length;
-      if(!mine){ this.persist(base); return base; }
-      ['webs','objects','maintenance','loans','consumables','kits','comparisons','subscriptions','wishlist','investments'].forEach(k=>{
-        if(!(db[k]||[]).length) db[k] = base[k];
-      });
-      db.version = base.version;
-      Object.keys(base).forEach(k => { if(db[k] === undefined) db[k] = base[k]; });
-      this.persist(db);
-      return db;
-    }
     Object.keys(base).forEach(k => { if(db[k] === undefined) db[k] = base[k]; });
+    // Cada colección vacía se rellena con los datos de partida, y las webs de
+    // referencia se fusionan por id en cada carga (idempotente, nunca pisa lo tuyo).
+    ['webs','objects','maintenance','loans','consumables','kits','comparisons','subscriptions','wishlist','investments'].forEach(k=>{
+      if(!(db[k]||[]).length) db[k] = base[k];
+    });
+    let changed = false;
+    base.webs.forEach(w=>{
+      const mine = db.webs.find(x=>x.id===w.id);
+      if(!mine){ db.webs.push(w); changed = true; }
+      else if(mine._seedRev !== w._seedRev){
+        // solo se corrigen los campos de referencia; tareas y notas tuyas se respetan
+        ['name','url','category','purpose','areas','repo','hosting','domainProvider','tech'].forEach(f=>{
+          if(w[f] !== undefined && mine[f] !== w[f]) mine[f] = w[f];
+        });
+        mine._seedRev = w._seedRev;
+        changed = true;
+      }
+    });
+    // la entrada provisional 'Blog de fotografía' se retira: Lens by JRR ya es el blog
+    const dup = db.webs.findIndex(w=>w.id==='w-blogfoto' && !w.url);
+    if(dup>-1){ db.webs.splice(dup,1); changed = true; }
+    if(this.num(db.version) !== base.version){ db.version = base.version; changed = true; }
+    if(changed) this.persist(db);
     return db;
   }
   resetSeed = () => {
@@ -1450,9 +1468,11 @@ class Component extends DCLogic {
 
     if(section==='inventario'){
       if(tab==='Webs'){
-        view = mk('Web', ['URL','Categoría','Pendientes'], db.webs.map(w=>({
-          id:w.id, name:w.name, sub:w.areas||'', cells:[w.url||'—', w.category||'—', ((w.tasks||[]).filter(t=>!t.done).length||0)+' tareas'],
-          hasTag:!!w.status, tag:w.status, tagClass:statusCls(w.status)
+        view = mk('Web', ['Categoría','Hosting','Pendientes'], db.webs.map(w=>({
+          id:w.id, name:w.name, sub:w.purpose||w.areas||'',
+          cells:[w.category||'—', w.hosting||'—', ((w.tasks||[]).filter(t=>!t.done).length||0)+' tareas'],
+          hasTag:!!w.status, tag:w.status, tagClass:statusCls(w.status),
+          hasLink:!!w.url, link:w.url||'#'
         })), db.webs.length+' webs y proyectos digitales');
       } else {
         const list = tab==='Todos' ? db.objects : db.objects.filter(o=>o.category===tab);
